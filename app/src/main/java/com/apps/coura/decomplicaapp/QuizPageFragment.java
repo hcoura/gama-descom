@@ -9,18 +9,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.QuizPage;
 import com.apps.coura.decomplicaapp.model.VideoPage;
+import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import app.minimize.com.seek_bar_compat.SeekBarCompat;
 
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
-public class QuizPageFragment extends Fragment{
+public class QuizPageFragment extends NextPageFragment{
 
     private static final String MOD_POSITION = "mod_position";
     private static final String POSITION = "position";
@@ -30,7 +32,9 @@ public class QuizPageFragment extends Fragment{
     private QuizPage mQuizPage;
 
     private Handler mHandler;
-    private SeekBarCompat mTimer;
+    private MySeekBarCompat mTimer;
+    private int mPos;
+    private int mModPos;
     private int mCurrentDuration = TIMER_LENGTH;
 
     @Override
@@ -38,9 +42,10 @@ public class QuizPageFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // todo: save instance
 
-        int modPos = getArguments() != null ? getArguments().getInt(MOD_POSITION) : 0;
-        int pos = getArguments() != null ? getArguments().getInt(POSITION) : 0;
-        mQuizPage = ModuleFactory.getListOfModules().get(modPos).getQuizPages().get(pos);
+
+        mModPos = getArguments() != null ? getArguments().getInt(MOD_POSITION) : 0;
+        mPos = getArguments() != null ? getArguments().getInt(POSITION) : 0;
+        mQuizPage = ModuleFactory.getListOfModules().get(mModPos).getQuizPages().get(mPos);
 
         mHandler = new Handler();
     }
@@ -50,9 +55,17 @@ public class QuizPageFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        mTimer = (SeekBarCompat)v.findViewById(R.id.timer_seekBar);
+        mTimer = (MySeekBarCompat)v.findViewById(R.id.timer_seekBar);
 
         mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
+
+        Button confirmButton = (Button)v.findViewById(R.id.quiz_confirm_button);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNextPageCallback().onNextPage();
+            }
+        });
 
         return v;
     }

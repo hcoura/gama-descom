@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <app.minimize.com.seek_bar_compat.SeekBarCompat
+    <com.apps.coura.decomplicaapp.views.MySeekBarCompat
         android:id="@+id/timer_seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +59,7 @@
     </RadioGroup>
 
     <Button
+        android:id="@+id/quiz_confirm_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Confirmar"/>
