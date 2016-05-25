@@ -1,29 +1,26 @@
 package com.apps.coura.decomplicaapp;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.QuizPage;
-import com.apps.coura.decomplicaapp.model.VideoPage;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import app.minimize.com.seek_bar_compat.SeekBarCompat;
 
 /**
  * Created by Henrique Coura on 25/05/2016.
@@ -42,6 +39,10 @@ public class QuizPageFragment extends NextPageFragment {
     private int mPos;
     private int mModPos;
     private int mCurrentDuration = TIMER_LENGTH;
+    private boolean currentAnswer = false;
+
+    private Button mConfirmButton;
+    private RadioGroup mAnswerRadioGroup;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,22 +61,53 @@ public class QuizPageFragment extends NextPageFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz, container, false);
 
+        TextView questionTextView = (TextView)v.findViewById(R.id.quiz_page_text_view);
+        questionTextView.setText(mQuizPage.getQuestion());
+
+        mAnswerRadioGroup = (RadioGroup)v.findViewById(R.id.quiz_radioGroup);
+        int count = mAnswerRadioGroup.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View o = mAnswerRadioGroup.getChildAt(i);
+            if (o instanceof RadioButton) {
+                RadioButton radioBtn =  (RadioButton)o;
+                radioBtn.setText(mQuizPage.getAnswers().get(i).getAnswerText());
+                final int finalI = i;
+                radioBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        currentAnswer = mQuizPage.getAnswers().get(finalI).isCorrectAnswer();
+                    }
+                });
+            }
+        }
+
+        mAnswerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (!mConfirmButton.isEnabled()){
+                    mConfirmButton.setEnabled(true);
+                }
+            }
+        });
+
         mTimer = (MySeekBarCompat) v.findViewById(R.id.timer_seekBar);
 
         mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
 
-        Button confirmButton = (Button) v.findViewById(R.id.quiz_confirm_button);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+        mConfirmButton = (Button) v.findViewById(R.id.quiz_confirm_button);
+        mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                quizCompleted();
+                if (currentAnswer) {
+                    quizCompleted();
+                } else {
+                    Toast.makeText(getActivity(), "Resposta Errada", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         return v;
     }
-
 
 
     public static QuizPageFragment newInstance(int mod_position, int position) {

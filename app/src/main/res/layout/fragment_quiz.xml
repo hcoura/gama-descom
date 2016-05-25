@@ -27,6 +27,7 @@
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
 
     <RadioGroup
+        android:id="@+id/quiz_radioGroup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -60,6 +61,7 @@
 
     <Button
         android:id="@+id/quiz_confirm_button"
+        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Confirmar"/>

@@ -49,7 +49,7 @@ public class VideoPageFragment extends NextPageFragment{
         youTubePlayerFragment.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("sDC3OYLQCyo");
+                youTubePlayer.loadVideo(mVideoPage.getVideoUrl());
                 youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                     @Override
                     public void onLoading() {
