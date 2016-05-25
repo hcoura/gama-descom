@@ -1,9 +1,11 @@
 package com.apps.coura.decomplicaapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,7 @@ public class VideoPageFragment extends NextPageFragment{
 
                     @Override
                     public void onVideoEnded() {
-                        Log.d("Video", "Video has ended");
+                        videoCompleted();
                     }
 
                     @Override
@@ -91,12 +93,27 @@ public class VideoPageFragment extends NextPageFragment{
         nexPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNextPageCallback().onNextPage();
+                videoCompleted();
             }
         });
 
 
         return v;
+    }
+
+    private void videoCompleted() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Você acabou de assistir o vídeo e ganhar 50 pts!")
+                .setTitle("Parabéns!")
+                .setPositiveButton("Ir para o teste", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        getNextPageCallback().onNextPage();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     public static VideoPageFragment newInstance(int mod_position, int position) {
@@ -109,18 +126,4 @@ public class VideoPageFragment extends NextPageFragment{
         return fragment;
     }
 
-
-
-    //    mYouTubePlayerView = (YouTubePlayerView)v.findViewById(R.id.youtube_player);
-//    mYouTubePlayerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
-//        @Override
-//        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-//            youTubePlayer.loadVideo("sDC3OYLQCyo");
-//        }
-//
-//        @Override
-//        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//
-//        }
-//    });
 }

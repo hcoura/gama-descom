@@ -1,10 +1,12 @@
 package com.apps.coura.decomplicaapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +48,6 @@ public class QuizPageFragment extends NextPageFragment {
         super.onCreate(savedInstanceState);
         // todo: save instance
 
-
         mModPos = getArguments() != null ? getArguments().getInt(MOD_POSITION) : 0;
         mPos = getArguments() != null ? getArguments().getInt(POSITION) : 0;
         mQuizPage = ModuleFactory.getListOfModules().get(mModPos).getQuizPages().get(mPos);
@@ -67,12 +68,15 @@ public class QuizPageFragment extends NextPageFragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNextPageCallback().onNextPage();
+
+                quizCompleted();
             }
         });
 
         return v;
     }
+
+
 
     public static QuizPageFragment newInstance(int mod_position, int position) {
 
@@ -104,13 +108,54 @@ public class QuizPageFragment extends NextPageFragment {
 
     @Subscribe
     public void onStartTimer(ModuleActivity.StartTimer event) {
-        mCurrentDuration = HANDLER_DELAY;
+        mCurrentDuration = TIMER_LENGTH;
         mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
     }
 
     @Override
-    public void onPause() {
-        Log.d("Quiz", "onPause");
-        super.onPause();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    private void quizCompleted() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Você acertou a pergunta e ganhou 150 pts!")
+                .setTitle("Parabéns!")
+                .setPositiveButton("Próxima aula", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        if (ModuleFactory.getListOfModules().get(mModPos).getQuizPages().size() <= mPos + 1) {
+                            moduleCompleted();
+                        } else {
+                            getNextPageCallback().onNextPage();
+                        }
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private void moduleCompleted() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Você completou o módulo com 1000 pts!")
+                .setTitle("Parabéns!")
+                .setPositiveButton("Retornar ao menu", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        getActivity().onBackPressed();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
     }
 }
