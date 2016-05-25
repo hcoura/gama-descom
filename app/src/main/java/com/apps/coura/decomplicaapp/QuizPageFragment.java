@@ -11,22 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.QuizPage;
 import com.apps.coura.decomplicaapp.model.VideoPage;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import app.minimize.com.seek_bar_compat.SeekBarCompat;
 
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
-public class QuizPageFragment extends NextPageFragment{
+public class QuizPageFragment extends NextPageFragment {
 
     private static final String MOD_POSITION = "mod_position";
     private static final String POSITION = "position";
-    private static final int TIMER_LENGTH = 1000*60;
+    private static final int TIMER_LENGTH = 1000 * 60;
     private static final int HANDLER_DELAY = 100;
 
     private QuizPage mQuizPage;
@@ -55,11 +59,11 @@ public class QuizPageFragment extends NextPageFragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        mTimer = (MySeekBarCompat)v.findViewById(R.id.timer_seekBar);
+        mTimer = (MySeekBarCompat) v.findViewById(R.id.timer_seekBar);
 
         mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
 
-        Button confirmButton = (Button)v.findViewById(R.id.quiz_confirm_button);
+        Button confirmButton = (Button) v.findViewById(R.id.quiz_confirm_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,54 +86,26 @@ public class QuizPageFragment extends NextPageFragment{
 
     private Runnable mUpdateTimerTask = new Runnable() {
         public void run() {
-//            mCurrentDuration -= HANDLER_DELAY;
-//
-//            float progress = (mCurrentDuration/TIMER_LENGTH) * 100;
-//
-//            mTimer.setProgress((int)progress);
-//
-//            // Running this thread after 50 milliseconds
-//            if (mCurrentDuration <= 0 ){
-//                Log.d("Quiz", "timer ended");
-//            } else {
-//                mHandler.postDelayed(this, HANDLER_DELAY);
-//            }
-//
-//            Log.d("quiz", ""+QuizPageFragment.this);
-//
-//            mHandler.postDelayed(this, HANDLER_DELAY);
+            mCurrentDuration -= HANDLER_DELAY;
+
+            float progress = ((float)mCurrentDuration / TIMER_LENGTH) * 100;
+
+            mTimer.setProgress((int) progress);
+
+            // Running this thread after 50 milliseconds
+            if (mCurrentDuration <= 0) {
+                Log.d("Quiz", "timer ended");
+            } else {
+                mHandler.postDelayed(this, HANDLER_DELAY);
+            }
+
         }
     };
 
-    @Override
-    public void onResume() {
-        Log.d("Quiz", "onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        Log.d("Quiz", "onAttach");
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        Log.d("Quiz", "onDetach");
-        super.onDetach();
-    }
-
-    @Override
-    public void onStart() {
-
-        Log.d("Quiz", "onStart");
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        Log.d("Quiz", "onStop");
-        super.onStop();
+    @Subscribe
+    public void onStartTimer(ModuleActivity.StartTimer event) {
+        mCurrentDuration = HANDLER_DELAY;
+        mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
     }
 
     @Override

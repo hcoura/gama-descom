@@ -13,6 +13,8 @@ import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import app.minimize.com.seek_bar_compat.SeekBarCompat;
@@ -69,7 +71,11 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
 
     @Override
     public void onNextPage() {
-        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+        int nextPos = mViewPager.getCurrentItem() + 1;
+        if (nextPos % 2 != 0) {
+            EventBus.getDefault().post(new StartTimer());
+        }
+        mViewPager.setCurrentItem(nextPos);
     }
 
     private class ModulePagesAdapter extends FragmentStatePagerAdapter {
@@ -94,4 +100,6 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
             return mModule.getVideoPages().size() + mModule.getQuizPages().size();
         }
     }
+
+    public class StartTimer {}
 }
