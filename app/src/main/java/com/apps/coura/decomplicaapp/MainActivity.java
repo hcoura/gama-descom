@@ -1,11 +1,7 @@
 package com.apps.coura.decomplicaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,18 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
-import com.apps.coura.decomplicaapp.model.Module;
-import com.apps.coura.decomplicaapp.model.ModuleFactory;
-
-import java.util.List;
-
+/**
+ * Created by Henrique Coura on 26/05/2016.
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,24 +36,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setRecyclerView();
+        FrameLayout subjectButton = (FrameLayout)findViewById(R.id.subject_button);
+        subjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, SubjectActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
-    private void setRecyclerView() {
-        List<Module> modules = ModuleFactory.getListOfModules();
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.module_recycler);
-
-        if (mRecyclerView != null) {
-            mRecyclerView.setHasFixedSize(true);
-        }
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new ModuleAdapter(modules, this);
-        mRecyclerView.setAdapter(mAdapter);
-
-    }
 
     @Override
     public void onBackPressed() {
