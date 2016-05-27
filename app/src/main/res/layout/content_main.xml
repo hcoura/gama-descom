@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textAllCaps="true"
-            android:text="Biologia"
+            android:text="HISTÓRIA"
             android:textColor="#00CF8E"
             android:textStyle="bold"
             android:textSize="18sp"/>

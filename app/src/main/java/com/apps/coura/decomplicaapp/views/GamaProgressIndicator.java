@@ -16,9 +16,9 @@ import com.apps.coura.decomplicaapp.R;
  */
 public class GamaProgressIndicator extends View {
 
-    private final float PROGRESS_THICK_RATIO = 0.2f;
+    private final float PROGRESS_THICK_RATIO = 0.5f;
     private final float BASE_THICK_RATIO = 0.5f;
-    private final float INNER_RADIUS_RATIO = 0.8f;
+    private final float INNER_RADIUS_RATIO = 1f;
 
     private Paint mBasePaint;
     private Paint mProgressPaint;

@@ -11,65 +11,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
         android:max="10000"
         android:progress="10000"
-        app:progressColor="#ff0000"
-        app:thumbColor="#ff0000"
+        app:progressColor="@color/colorAccent"
+        app:thumbColor="@color/colorAccent"
         android:clickable="false"/>
 
     <TextView
         android:id="@+id/quiz_page_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:gravity="center"
         android:text="PERGUNTA"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"/>
 
-    <RadioGroup
-        android:id="@+id/quiz_radioGroup"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <RadioButton
+        <RadioGroup
+            android:id="@+id/quiz_radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Opção 1"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Opção 2"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Opção 1"
+                android:textColor="#000"/>
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Opção 3"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Opção 2"/>
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Opção 4"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Opção 3"/>
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Opção 5"/>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Opção 4"/>
 
-    </RadioGroup>
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Opção 5"/>
 
-    <Button
-        android:id="@+id/quiz_confirm_button"
+        </RadioGroup>
+
+    </ScrollView>
+
+
+
+    <info.hoang8f.widget.FButton
         android:enabled="false"
-        android:layout_width="match_parent"
+        android:id="@+id/quiz_confirm_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirmar"/>
+        android:layout_gravity="center"
+        android:text="OK!"
+        app:buttonColor="@color/colorPrimary"
+        app:cornerRadius="4dp"
+        android:textColor="#fff"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"/>
 
 </LinearLayout>

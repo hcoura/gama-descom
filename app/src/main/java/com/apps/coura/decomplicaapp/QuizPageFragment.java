@@ -22,6 +22,8 @@ import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import info.hoang8f.widget.FButton;
+
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
@@ -41,7 +43,7 @@ public class QuizPageFragment extends NextPageFragment {
     private int mCurrentDuration = TIMER_LENGTH;
     private boolean currentAnswer = false;
 
-    private Button mConfirmButton;
+    private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
 
     @Override
@@ -94,7 +96,7 @@ public class QuizPageFragment extends NextPageFragment {
 
         mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
 
-        mConfirmButton = (Button) v.findViewById(R.id.quiz_confirm_button);
+        mConfirmButton = (FButton) v.findViewById(R.id.quiz_confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
