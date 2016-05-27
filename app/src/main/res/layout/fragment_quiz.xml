@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
-        android:progress="100"
-        app:progressColor="@color/colorAccent"
-        app:thumbColor="@color/colorAccent"
+        android:max="10000"
+        android:progress="10000"
+        app:progressColor="#ff0000"
+        app:thumbColor="#ff0000"
         android:clickable="false"/>
 
     <TextView
@@ -35,26 +36,31 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Opção 1"/>
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Opção 2"/>
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Opção 3"/>
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Opção 4"/>
 
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Opção 5"/>
 
     </RadioGroup>

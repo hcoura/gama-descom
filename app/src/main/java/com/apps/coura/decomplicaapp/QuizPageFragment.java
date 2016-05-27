@@ -124,7 +124,7 @@ public class QuizPageFragment extends NextPageFragment {
         public void run() {
             mCurrentDuration -= HANDLER_DELAY;
 
-            float progress = ((float)mCurrentDuration / TIMER_LENGTH) * 100;
+            float progress = ((float)mCurrentDuration / TIMER_LENGTH) * 10000;
 
             mTimer.setProgress((int) progress);
 
