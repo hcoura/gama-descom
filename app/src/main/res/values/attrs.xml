@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GamaProgressIndicator">
+        <attr name="circleRadius" format="dimension" />
+        <attr name="gamaProgressColor" format="color" />
+        <attr name="baseColor" format="color" />
+        <attr name="numOfPages" format="integer" />
+        <attr name="currentPage" format="integer" />
+        <attr name="progress" format="float" />
+    </declare-styleable>
+</resources>

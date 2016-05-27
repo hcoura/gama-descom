@@ -27,7 +27,7 @@ public class NextPageFragment extends Fragment {
             mNextPageCallback = (OnNextPageListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnNextPageListener");
         }
     }
 }

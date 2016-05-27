@@ -7,28 +7,27 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
+import com.apps.coura.decomplicaapp.views.GamaProgressIndicator;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import app.minimize.com.seek_bar_compat.SeekBarCompat;
-
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
-public class ModuleActivity extends AppCompatActivity implements NextPageFragment.OnNextPageListener {
+public class ModuleActivity extends AppCompatActivity implements NextPageFragment.OnNextPageListener, VideoPageFragment.OnVideoProgressListener {
 
     public static final String MODULE_ID_EXTRA = "com.apps.coura.descomplicaapp.module_id";
     private Module mModule;
     private int mPos;
-    private MySeekBarCompat mIndicatorBar;
+    private GamaProgressIndicator mIndicatorBar;
     private ViewPager mViewPager;
+    private int mNumPages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,9 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
         }
 
         mViewPager = (ViewPager) findViewById(R.id.module_view_pager);
-        mIndicatorBar = (MySeekBarCompat) findViewById(R.id.indicatorSeekBar);
+        mIndicatorBar = (GamaProgressIndicator) findViewById(R.id.module_progressIndicator);
+        mNumPages = mModule.getVideoPages().size() + mModule.getQuizPages().size();
+        mIndicatorBar.setNumOfPages(mNumPages);
 
         ModulePagesAdapter modulePagesAdapter = new ModulePagesAdapter(getSupportFragmentManager());
 
@@ -54,9 +55,8 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                int totalPos = mModule.getVideoPages().size() + mModule.getQuizPages().size() - 1;
-                float progress = ((float)position/totalPos) * 100;
-                mIndicatorBar.setProgress((int)progress);
+                mIndicatorBar.setProgress(0);
+                mIndicatorBar.setCurrentPage(position+1);
             }
 
             @Override
@@ -78,6 +78,11 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
         mViewPager.setCurrentItem(nextPos);
     }
 
+    @Override
+    public void onProgress(float progress) {
+        mIndicatorBar.setProgress(progress);
+    }
+
     private class ModulePagesAdapter extends FragmentStatePagerAdapter {
         public ModulePagesAdapter(FragmentManager fm) {
             super(fm);
@@ -97,7 +102,7 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
 
         @Override
         public int getCount() {
-            return mModule.getVideoPages().size() + mModule.getQuizPages().size();
+            return mNumPages;
         }
     }
 

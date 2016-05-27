@@ -3,6 +3,7 @@ package com.apps.coura.decomplicaapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -21,19 +22,25 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
-public class VideoPageFragment extends NextPageFragment{
+public class VideoPageFragment extends NextPageFragment {
 
     private static final String MOD_POSITION = "mod_position";
     private static final String POSITION = "position";
+    private static final long HANDLER_DELAY = 1000;
     private VideoPage mVideoPage;
     private int mModPos;
     private YouTubePlayerSupportFragment youTubePlayerFragment;
     private int mPos;
+    private Handler mHandler;
+
+    private OnVideoProgressListener mVideoProgressCallback;
+    private YouTubePlayer mYouTubePlayer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // todo: save instance
+        mHandler = new Handler();
 
         mModPos = getArguments() != null ? getArguments().getInt(MOD_POSITION) : 0;
         mPos = getArguments() != null ? getArguments().getInt(POSITION) : 0;
@@ -50,25 +57,25 @@ public class VideoPageFragment extends NextPageFragment{
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 youTubePlayer.loadVideo(mVideoPage.getVideoUrl());
+
+                mYouTubePlayer = youTubePlayer;
+
                 youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                     @Override
                     public void onLoading() {
-
                     }
 
                     @Override
                     public void onLoaded(String s) {
-
                     }
 
                     @Override
                     public void onAdStarted() {
-
                     }
 
                     @Override
                     public void onVideoStarted() {
-
+                        mHandler.postDelayed(mUpdateProgressTask, HANDLER_DELAY);
                     }
 
                     @Override
@@ -89,7 +96,7 @@ public class VideoPageFragment extends NextPageFragment{
             }
         });
 
-        Button nexPage = (Button)v.findViewById(R.id.change_page_button);
+        Button nexPage = (Button) v.findViewById(R.id.change_page_button);
         nexPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,5 +132,33 @@ public class VideoPageFragment extends NextPageFragment{
         fragment.setArguments(args);
         return fragment;
     }
+
+    public interface OnVideoProgressListener {
+        void onProgress(float progress);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mVideoProgressCallback = (OnVideoProgressListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnVideoProgressListener");
+        }
+    }
+
+    private Runnable mUpdateProgressTask = new Runnable() {
+        public void run() {
+            float progress = (float) mYouTubePlayer.getCurrentTimeMillis() / mYouTubePlayer.getDurationMillis();
+
+            mVideoProgressCallback.onProgress(progress);
+
+            mHandler.postDelayed(this, HANDLER_DELAY);
+
+        }
+    };
 
 }

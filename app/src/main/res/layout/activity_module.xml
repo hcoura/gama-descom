@@ -34,13 +34,12 @@
             android:layout_weight="1"
             />
 
-        <com.apps.coura.decomplicaapp.views.MySeekBarCompat
-            android:id="@+id/indicatorSeekBar"
+        <com.apps.coura.decomplicaapp.views.GamaProgressIndicator
+            android:id="@+id/module_progressIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:progressBackgroundColor="@color/colorPrimary"
-            app:thumbColor="@color/colorPrimary"/>
+            app:circleRadius="12dp"/>
 
     </LinearLayout>
 
