@@ -80,6 +80,7 @@ public class VideoPageFragment extends NextPageFragment {
 
                     @Override
                     public void onVideoEnded() {
+                        mHandler.removeCallbacks(mUpdateProgressTask);
                         videoCompleted();
                     }
 
@@ -161,4 +162,9 @@ public class VideoPageFragment extends NextPageFragment {
         }
     };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacks(mUpdateProgressTask);
+    }
 }

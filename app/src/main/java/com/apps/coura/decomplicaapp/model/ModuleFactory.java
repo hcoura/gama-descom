@@ -11,6 +11,8 @@ public class ModuleFactory {
 
     public static ArrayList<Module> getListOfModules() {
 
+        // todo: clear ***
+
         ArrayList<Module> modules = new ArrayList<>();
 
         // Module 1
@@ -53,7 +55,7 @@ public class ModuleFactory {
                 new Answer("Perspectiva dos representantes do sul dos EUA.", false),
                 new Answer("Proposta de Lincoln para abolir a escravidão.", false),
                 new Answer("Proposição nortista para impedir a expansão para o Oeste.", false),
-                new Answer("Preocupação de Lincoln com uma possível guerra civil.", true)
+                new Answer("Preocupação de Lincoln com uma possível guerra civil.***", true)
         );
 
         quizPage3.setAnswers(answers3);
@@ -67,7 +69,7 @@ public class ModuleFactory {
                 new Answer("A expansão da economia açucareira no Nordeste, o estreitamento das relações com a Inglaterra e a expulsão dos jesuítas.", false),
                 new Answer("A incorporação do Extremo-Sul, o início da exploração do ouro em Minas Gerais e a reordenação administrativa do território.", false),
                 new Answer("A incorporação do Extremo-Sul, o início da exploração do ouro em Minas Gerais e a reordenação administrativa do território.", false),
-                new Answer("A expansão da ocupação interna pela pecuária, a expulsão dos franceses e o incremento do bandeirismo.", true)
+                new Answer("A expansão da ocupação interna pela pecuária, a expulsão dos franceses e o incremento do bandeirismo.***", true)
         );
 
         quizPage4.setAnswers(answers4);
