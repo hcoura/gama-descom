@@ -12,6 +12,7 @@ import android.util.Log;
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.views.GamaProgressIndicator;
+import com.apps.coura.decomplicaapp.views.NoSwipeViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,8 +27,9 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
     private Module mModule;
     private int mPos;
     private GamaProgressIndicator mIndicatorBar;
-    private ViewPager mViewPager;
+    private NoSwipeViewPager mFragmentView;
     private int mNumPages;
+    private int mCurrentPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +46,15 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
             getSupportActionBar().setTitle(mModule.getTitle());
         }
 
-        mViewPager = (ViewPager) findViewById(R.id.module_view_pager);
+        mFragmentView = (NoSwipeViewPager) findViewById(R.id.module_fragment_view);
         mIndicatorBar = (GamaProgressIndicator) findViewById(R.id.module_progressIndicator);
         mNumPages = mModule.getVideoPages().size() + mModule.getQuizPages().size();
         mIndicatorBar.setNumOfPages(mNumPages);
 
         ModulePagesAdapter modulePagesAdapter = new ModulePagesAdapter(getSupportFragmentManager());
 
-        mViewPager.setAdapter(modulePagesAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mFragmentView.setAdapter(modulePagesAdapter);
+        mFragmentView.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 mIndicatorBar.setProgress(0);
@@ -67,20 +69,44 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
             public void onPageScrollStateChanged(int state) {
             }
         });
+//        mCurrentPos = 0;
+//        if (mCurrentPos == 0 || mCurrentPos % 2 == 0) {
+//            int videoPos = mCurrentPos == 0 ? 0 : mCurrentPos/2;
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.module_fragment_view, VideoPageFragment.newInstance(mPos,videoPos))
+//                    .commit();
+//        } else {
+//            int quizPos = mCurrentPos == 1 ? 1 : mCurrentPos/2;
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.module_fragment_view, QuizPageFragment.newInstance(mPos,quizPos))
+//                    .commit();
+//        }
     }
 
     @Override
     public void onNextPage() {
-        int nextPos = mViewPager.getCurrentItem() + 1;
+        int nextPos = mFragmentView.getCurrentItem() + 1;
+//        mCurrentPos++;
+//        if (mCurrentPos == 0 || mCurrentPos % 2 == 0) {
+//            int videoPos = mCurrentPos == 0 ? 0 : mCurrentPos/2;
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.module_fragment_view, VideoPageFragment.newInstance(mPos,videoPos))
+//                    .commit();
+//        } else {
+//            int quizPos = mCurrentPos == 1 ? 1 : mCurrentPos/2;
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.module_fragment_view, QuizPageFragment.newInstance(mPos,quizPos))
+//                    .commit();
+//        }
         if (nextPos % 2 != 0) {
             EventBus.getDefault().post(new StartTimer());
         }
-        mViewPager.setCurrentItem(nextPos);
+        mFragmentView.setCurrentItem(nextPos);
     }
 
     @Override
     public void onProgress(float progress) {
-        Log.d("Progress", ""+progress);
+//        Log.d("Progress", ""+progress);
         mIndicatorBar.setProgress(progress);
     }
 

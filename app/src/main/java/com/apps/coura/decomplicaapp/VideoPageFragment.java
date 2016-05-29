@@ -109,6 +109,7 @@ public class VideoPageFragment extends NextPageFragment {
 
     private void videoCompleted() {
         mHandler.removeCallbacks(mUpdateProgressTask);
+        mYouTubePlayer.release();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você acabou de assistir o vídeo e ganhar 50 pts!")
                 .setTitle("Parabéns!")
