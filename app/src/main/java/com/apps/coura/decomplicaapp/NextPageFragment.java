@@ -1,6 +1,9 @@
 package com.apps.coura.decomplicaapp;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 /**
@@ -9,9 +12,14 @@ import android.support.v4.app.Fragment;
 public class NextPageFragment extends Fragment {
 
     private OnNextPageListener mNextPageCallback;
+    private OnProgressListener mProgressCallback;
 
     public OnNextPageListener getNextPageCallback() {
         return mNextPageCallback;
+    }
+
+    public OnProgressListener getProgressCallback() {
+        return mProgressCallback;
     }
 
     public interface OnNextPageListener {
@@ -29,5 +37,17 @@ public class NextPageFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnNextPageListener");
         }
+
+        try {
+            mProgressCallback = (OnProgressListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnProgressListener");
+        }
     }
+
+    public interface OnProgressListener {
+        void onProgress(float progress);
+    }
+
 }

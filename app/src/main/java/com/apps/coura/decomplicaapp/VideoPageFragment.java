@@ -1,13 +1,10 @@
 package com.apps.coura.decomplicaapp;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +28,16 @@ public class VideoPageFragment extends NextPageFragment {
     private int mModPos;
     private YouTubePlayerSupportFragment youTubePlayerFragment;
     private int mPos;
+
     private Handler mHandler;
 
-    private OnVideoProgressListener mVideoProgressCallback;
     private YouTubePlayer mYouTubePlayer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // todo: save instance
+
         mHandler = new Handler();
 
         mModPos = getArguments() != null ? getArguments().getInt(MOD_POSITION) : 0;
@@ -116,6 +114,7 @@ public class VideoPageFragment extends NextPageFragment {
                 .setPositiveButton("Ir para o teste", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
+                        mHandler.removeCallbacks(null);
                         getNextPageCallback().onNextPage();
                     }
                 });
@@ -134,28 +133,11 @@ public class VideoPageFragment extends NextPageFragment {
         return fragment;
     }
 
-    public interface OnVideoProgressListener {
-        void onProgress(float progress);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mVideoProgressCallback = (OnVideoProgressListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnVideoProgressListener");
-        }
-    }
-
     private Runnable mUpdateProgressTask = new Runnable() {
         public void run() {
             float progress = (float) mYouTubePlayer.getCurrentTimeMillis() / mYouTubePlayer.getDurationMillis();
 
-            mVideoProgressCallback.onProgress(progress);
+            getProgressCallback().onProgress(progress);
 
             mHandler.postDelayed(this, HANDLER_DELAY);
 
@@ -165,6 +147,6 @@ public class VideoPageFragment extends NextPageFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacks(mUpdateProgressTask);
+        mHandler.removeCallbacks(null);
     }
 }

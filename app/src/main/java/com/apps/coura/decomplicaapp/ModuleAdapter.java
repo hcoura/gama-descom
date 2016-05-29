@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.Module;
@@ -27,10 +28,12 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
+        public ImageView image;
 
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.module_list_item_text_view);
+            image = (ImageView) v.findViewById(R.id.module_list_item_image_view);
 
         }
     }
@@ -57,6 +60,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                 mContext.startActivity(i);
             }
         });
+
+        holder.image.setImageResource(mModules.get(position).getIcon());
     }
 
     @Override

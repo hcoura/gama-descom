@@ -1,5 +1,7 @@
 package com.apps.coura.decomplicaapp.model;
 
+import com.apps.coura.decomplicaapp.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +19,7 @@ public class ModuleFactory {
 
         // Module 1
         Module module1 = new Module("Módulo 1");
+        module1.setIcon(R.drawable.mod1);
         VideoPage videoPage1 = new VideoPage("B_2I6anzgKY");
 
         QuizPage quizPage1 = new QuizPage("O governo de Vargas, no período de 1937 a 1945, pode ser considerado como sendo:");
@@ -82,6 +85,8 @@ public class ModuleFactory {
 
         // Module 2
         Module module2 = new Module("Módulo 2");
+        module2.setIcon(R.drawable.mod2);
+        module2.setLockedIcon(R.drawable.mod2_locked);
         VideoPage videoPage5 = new VideoPage("sDC3OYLQCyo");
         VideoPage videoPage6 = new VideoPage("sDC3OYLQCyo");
         List<VideoPage> videoPages2 = Arrays.asList(videoPage5, videoPage6);
@@ -93,8 +98,14 @@ public class ModuleFactory {
         List<QuizPage> quizPages2 = Arrays.asList(quizPage5, quizPage6);
         module2.setQuizPages(quizPages2);
 
+        // Module 3
+        Module module3 = new Module("Módulo 3");
+        module3.setLockedIcon(R.drawable.mod3_locked);
+        module3.setIcon(R.drawable.mod3_locked);
+
         modules.add(module1);
         modules.add(module2);
+        modules.add(module3);
 
         return modules;
 

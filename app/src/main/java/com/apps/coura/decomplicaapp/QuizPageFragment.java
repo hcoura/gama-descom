@@ -94,8 +94,6 @@ public class QuizPageFragment extends NextPageFragment {
 
         mTimer = (MySeekBarCompat) v.findViewById(R.id.timer_seekBar);
 
-        mHandler.postDelayed(mUpdateTimerTask, HANDLER_DELAY);
-
         mConfirmButton = (FButton) v.findViewById(R.id.quiz_confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +127,7 @@ public class QuizPageFragment extends NextPageFragment {
             float progress = ((float)mCurrentDuration / TIMER_LENGTH) * 10000;
 
             mTimer.setProgress((int) progress);
+            getProgressCallback().onProgress(1 - (progress/10000));
 
             // Running this thread after 50 milliseconds
             if (mCurrentDuration <= 0) {
@@ -169,6 +168,7 @@ public class QuizPageFragment extends NextPageFragment {
                         if (ModuleFactory.getListOfModules().get(mModPos).getQuizPages().size() <= mPos + 1) {
                             moduleCompleted();
                         } else {
+                            mHandler.removeCallbacks(null);
                             getNextPageCallback().onNextPage();
                         }
                     }
@@ -185,11 +185,18 @@ public class QuizPageFragment extends NextPageFragment {
                 .setPositiveButton("Retornar ao menu", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
+                        mHandler.removeCallbacks(null);
                         getActivity().onBackPressed();
                     }
                 });
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
         dialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacks(null);
     }
 }

@@ -10,6 +10,8 @@ public class Module {
     private String title;
     private List<VideoPage> videoPages;
     private List<QuizPage> quizPages;
+    private int icon;
+    private int lockedIcon;
 
     public Module(String title) {
         this.title = title;
@@ -39,4 +41,19 @@ public class Module {
         this.quizPages = quizPages;
     }
 
+    public int getLockedIcon() {
+        return lockedIcon;
+    }
+
+    public void setLockedIcon(int lockedIcon) {
+        this.lockedIcon = lockedIcon;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
 }

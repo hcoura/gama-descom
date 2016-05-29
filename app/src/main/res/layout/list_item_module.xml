@@ -4,21 +4,21 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
+    android:layout_marginBottom="16dp"
     android:gravity="center"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@drawable/module_circle"/>
+    <ImageView
+        android:id="@+id/module_list_item_image_view"
+        android:layout_width="96dp"
+        android:layout_height="96dp"/>
 
     <TextView
         android:id="@+id/module_list_item_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
-        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:textColor="#000"/>
 
 </LinearLayout>

@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.views.GamaProgressIndicator;
-import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
-public class ModuleActivity extends AppCompatActivity implements NextPageFragment.OnNextPageListener, VideoPageFragment.OnVideoProgressListener {
+public class ModuleActivity extends AppCompatActivity implements NextPageFragment.OnNextPageListener, NextPageFragment.OnProgressListener {
 
     public static final String MODULE_ID_EXTRA = "com.apps.coura.descomplicaapp.module_id";
     private Module mModule;
@@ -80,6 +80,7 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
 
     @Override
     public void onProgress(float progress) {
+        Log.d("Progress", ""+progress);
         mIndicatorBar.setProgress(progress);
     }
 
