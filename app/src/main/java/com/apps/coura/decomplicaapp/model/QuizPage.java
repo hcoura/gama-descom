@@ -8,6 +8,8 @@ import java.util.List;
 public class QuizPage {
     private String question;
     private List<Answer> answers;
+    private int maxPoints;
+    private int goldCoins;
 
     public QuizPage(String question) {
         this.question = question;
@@ -27,5 +29,21 @@ public class QuizPage {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public int getMaxPoints() {
+        return maxPoints;
+    }
+
+    public void setMaxPoints(int maxPoints) {
+        this.maxPoints = maxPoints;
+    }
+
+    public int getGoldCoins() {
+        return goldCoins;
+    }
+
+    public void setGoldCoins(int goldCoins) {
+        this.goldCoins = goldCoins;
     }
 }
