@@ -22,9 +22,9 @@ public class LoginActivity extends AppCompatActivity {
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                Intent i = new Intent(LoginActivity.this,PrincipalActivity.class);
                 startActivity(i);
-
+                finish();
             }
         });
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/principal_color"
+    tools:context=".PrincipalActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/desc_game"/>
+
+    <ImageButton
+        android:id="@+id/challenge_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/challenge_button"
+        android:background="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/imageView3"/>
+
+    <ImageButton
+        android:id="@+id/profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:src="@drawable/profile_button"
+        android:layout_toEndOf="@id/imageView3"
+        android:layout_toRightOf="@id/imageView3"
+        android:layout_below="@id/challenge_button"/>
+
+    <ImageButton
+        android:id="@+id/config_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageView3"
+        android:layout_toRightOf="@id/imageView3"
+        android:layout_below="@id/profile_button"
+        android:layout_marginTop="8dp"
+        android:background="#fff"
+        android:src="@drawable/config_button"/>
+
+    <ImageButton
+        android:id="@+id/leave_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/imageView3"
+        android:src="@drawable/leave_button"/>
+
+
+
+</RelativeLayout>

@@ -7,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.Module;
 
 import java.util.List;
 
-/**
- * Created by Henrique Coura on 25/05/2016.
- */
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder> {
 
     private Context mContext;
@@ -29,11 +27,13 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public ImageView image;
+        public LinearLayout layout;
 
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.module_list_item_text_view);
             image = (ImageView) v.findViewById(R.id.module_list_item_image_view);
+            layout = (LinearLayout) v.findViewById(R.id.module_list_item_layout);
 
         }
     }
@@ -48,11 +48,12 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
+        // - get element from your data set at this position
         // - replace the contents of the view with that element
         final ViewHolder vh = holder;
         holder.title.setText(mModules.get(position).getTitle());
-        holder.title.setOnClickListener(new View.OnClickListener() {
+        holder.image.setImageResource(mModules.get(position).getIcon());
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, ModuleActivity.class);
@@ -60,8 +61,6 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                 mContext.startActivity(i);
             }
         });
-
-        holder.image.setImageResource(mModules.get(position).getIcon());
     }
 
     @Override
