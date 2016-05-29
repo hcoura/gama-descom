@@ -42,6 +42,7 @@ public class QuizPageFragment extends NextPageFragment {
     private int mModPos;
     private int mCurrentDuration = TIMER_LENGTH;
     private boolean currentAnswer = false;
+    private boolean isQuizCompleted = false;
 
     private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
@@ -99,6 +100,7 @@ public class QuizPageFragment extends NextPageFragment {
             @Override
             public void onClick(View v) {
                 if (currentAnswer) {
+                    isQuizCompleted = true;
                     quizCompleted();
                 } else {
                     Toast.makeText(getActivity(), "Resposta Errada", Toast.LENGTH_SHORT).show();
@@ -130,7 +132,7 @@ public class QuizPageFragment extends NextPageFragment {
             getProgressCallback().onProgress(1 - (progress/10000));
 
             // Running this thread after 50 milliseconds
-            if (mCurrentDuration <= 0) {
+            if (mCurrentDuration <= 0 || isQuizCompleted) {
                 Log.d("Quiz", "timer ended");
             } else {
                 mHandler.postDelayed(this, HANDLER_DELAY);

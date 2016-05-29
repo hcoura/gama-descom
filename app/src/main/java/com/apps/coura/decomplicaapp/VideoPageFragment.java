@@ -32,6 +32,7 @@ public class VideoPageFragment extends NextPageFragment {
     private Handler mHandler;
 
     private YouTubePlayer mYouTubePlayer;
+    private boolean isVideoCompleted = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,9 +56,7 @@ public class VideoPageFragment extends NextPageFragment {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 youTubePlayer.loadVideo(mVideoPage.getVideoUrl());
-
                 mYouTubePlayer = youTubePlayer;
-
                 youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                     @Override
                     public void onLoading() {
@@ -78,7 +77,7 @@ public class VideoPageFragment extends NextPageFragment {
 
                     @Override
                     public void onVideoEnded() {
-                        mHandler.removeCallbacks(mUpdateProgressTask);
+                        isVideoCompleted = true;
                         videoCompleted();
                     }
 
@@ -99,6 +98,7 @@ public class VideoPageFragment extends NextPageFragment {
         nexPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isVideoCompleted = true;
                 videoCompleted();
             }
         });
@@ -108,13 +108,13 @@ public class VideoPageFragment extends NextPageFragment {
     }
 
     private void videoCompleted() {
+        mHandler.removeCallbacks(mUpdateProgressTask);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você acabou de assistir o vídeo e ganhar 50 pts!")
                 .setTitle("Parabéns!")
                 .setPositiveButton("Ir para o teste", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
-                        mHandler.removeCallbacks(null);
                         getNextPageCallback().onNextPage();
                     }
                 });
@@ -135,18 +135,19 @@ public class VideoPageFragment extends NextPageFragment {
 
     private Runnable mUpdateProgressTask = new Runnable() {
         public void run() {
-            float progress = (float) mYouTubePlayer.getCurrentTimeMillis() / mYouTubePlayer.getDurationMillis();
+            float progress = 0;
+            if (mYouTubePlayer != null) {
+                progress = (float) mYouTubePlayer.getCurrentTimeMillis() / mYouTubePlayer.getDurationMillis();
+            }
 
-            getProgressCallback().onProgress(progress);
 
-            mHandler.postDelayed(this, HANDLER_DELAY);
+            if (progress != 0) {
+                getProgressCallback().onProgress(progress);
+            }
 
+            if (!isVideoCompleted) {
+                mHandler.postDelayed(this, HANDLER_DELAY);
+            }
         }
     };
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacks(null);
-    }
 }

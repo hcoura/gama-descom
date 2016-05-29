@@ -52,7 +52,4 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/imageView3"
         android:src="@drawable/leave_button"/>
-
-
-
 </RelativeLayout>
