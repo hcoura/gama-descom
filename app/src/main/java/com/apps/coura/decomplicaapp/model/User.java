@@ -22,6 +22,7 @@ public class User {
     private static final String EXPERIENCE_KEY = "experience";
     private static final String LEVEL_KEY = "level";
     private static final String MODULE_LAST_POS_KEY = "module_last_pos";
+    private static final String UNLOCKED_MODULE_KEY = "unlocked_module";
 
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
@@ -162,5 +163,15 @@ public class User {
     public static int getModuleLastPosition(Context context, int module) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getInt(MODULE_LAST_POS_KEY + module, 0);
+    }
+
+    public static void setUnlockedModule(Context context, int module) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(UNLOCKED_MODULE_KEY, module).apply();
+    }
+
+    public static int getUnlockedModule(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(UNLOCKED_MODULE_KEY, 0);
     }
 }

@@ -210,6 +210,9 @@ public class QuizPageFragment extends NextPageFragment {
             }
         }
         User.setModuleLastPosition(getActivity(), mModPos, 0);
+        if (User.getUnlockedModule(getActivity()) <= mModPos) {
+            User.setUnlockedModule(getActivity(), mModPos + 1);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você completou o módulo com 1000 pts!")
                 .setTitle("Parabéns!")
