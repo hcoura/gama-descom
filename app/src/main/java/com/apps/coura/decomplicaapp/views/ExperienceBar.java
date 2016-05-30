@@ -76,7 +76,7 @@ public class ExperienceBar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int progressWidth = (int)((getWidth() - mBorderThickness*2) * mProgress);
+        int progressWidth = (int)((getWidth() - mBorderThickness) * mProgress);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             canvas.drawRoundRect(mBorderThickness/2, mBorderThickness/2, getWidth() - mBorderThickness/2, getHeight()-mBorderThickness/2, mRadius, mRadius, mBorderPaint);
             canvas.drawRoundRect(mBorderThickness, mBorderThickness, progressWidth, getHeight()-mBorderThickness,mRadius - mBorderThickness , mRadius - mBorderThickness ,mFillPaint);

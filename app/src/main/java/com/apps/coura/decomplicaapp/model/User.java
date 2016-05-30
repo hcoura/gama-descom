@@ -24,6 +24,9 @@ public class User {
     private static final String MODULE_LAST_POS_KEY = "module_last_pos";
     private static final String UNLOCKED_MODULE_KEY = "unlocked_module";
 
+    private static final String[] mTitles = {"Juninho em História", "Nerd em História", "Universitário em História",
+            "Mestre em História", "Ninja em História"};
+
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
 
@@ -188,5 +191,9 @@ public class User {
     public static int getUnlockedModule(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getInt(UNLOCKED_MODULE_KEY, 0);
+    }
+
+    public static String getUserTitle(Context context) {
+        return mTitles[getUserLevel(context)];
     }
 }

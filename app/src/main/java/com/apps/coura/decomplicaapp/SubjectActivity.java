@@ -27,9 +27,6 @@ public class SubjectActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private static final String[] mTitles = {"Juninho em História", "Nerd em História", "Universitário em História",
-            "Mestre em História", "Ninja em História"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +58,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         TextView titleTextView = (TextView)findViewById(R.id.titleTextView);
         if (titleTextView != null) {
-            titleTextView.setText(mTitles[User.getUserLevel(this)]);
+            titleTextView.setText(User.getUserTitle(this));
         }
 
         setRecyclerView();

@@ -1,6 +1,7 @@
 package com.apps.coura.decomplicaapp;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,9 +47,11 @@ public class QuizPageFragment extends NextPageFragment {
     private float mProgress;
 
     private AlertDialog mCorrectAnswerDialog;
+    private AlertDialog mNewLevelDialog;
 
     private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
+    private boolean hasLeveledUp = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -192,29 +195,30 @@ public class QuizPageFragment extends NextPageFragment {
             coinsTextView.setText(coins);
 
             User.completedQuiz(getActivity(), mModPos, mPos);
-            int exp = User.getExperience(getActivity()) + 300;
-            if (exp > 1000) {
+            int exp = User.getExperience(getActivity()) + 500;
+            if (exp >= 1000) {
                 User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
                 User.setExperience(getActivity(), exp - 1000);
-                // TODO: 30/05/2016 launch dialog of next level
+                hasLeveledUp = true;
                 expProgress = 1f;
-//                experienceBar.setProgress(1f);
             } else {
                 User.setExperience(getActivity(), exp);
                 expProgress = (float)exp/1000;
-//                experienceBar.setProgress((float)exp/1000);
             }
         } else {
             expProgress = (float)User.getExperience(getActivity())/1000;
-//            experienceBar.setProgress((float)User.getExperience(getActivity())/1000);
         }
 
         dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHandler.removeCallbacks(null);
                 if (mCorrectAnswerDialog != null) mCorrectAnswerDialog.dismiss();
-                getNextPageCallback().onNextPage();
+                if (hasLeveledUp) {
+                    levelUpDialog();
+                } else {
+                    goToNextPage();
+                }
+
             }
         });
 
@@ -222,25 +226,45 @@ public class QuizPageFragment extends NextPageFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v);
-//        builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
-//                            "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
-//                            "e 300 pontos de experiência")
-//                .setTitle("Parabéns!")
-//                .setPositiveButton("Próxima aula", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // User clicked OK button
-//                        mHandler.removeCallbacks(null);
-//                        getNextPageCallback().onNextPage();
-//                    }
-//                });
         mCorrectAnswerDialog = builder.create();
         mCorrectAnswerDialog.setCancelable(false);
         mCorrectAnswerDialog.show();
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(experienceBar, "progress", expProgress);
-        animator.setDuration(500);
+        animator.setDuration(1000);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
+    }
+
+    private void levelUpDialog() {
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_view_new_level,
+                (ViewGroup) getActivity().getWindow().getDecorView()
+                        .findViewById(android.R.id.content), false);
+
+        TextView newLevelTitle = (TextView)v.findViewById(R.id.new_level_title_textView);
+        FButton dialogConfirmButton = (FButton)v.findViewById(R.id.new_level_dialog_confirm_button);
+
+        newLevelTitle.setText(User.getUserTitle(getActivity()));
+
+        dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNewLevelDialog != null) mNewLevelDialog.dismiss();
+                goToNextPage();
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(v);
+        mNewLevelDialog = builder.create();
+        mNewLevelDialog.setCancelable(false);
+        mNewLevelDialog.show();
+    }
+
+    private void goToNextPage() {
+        mHandler.removeCallbacks(null);
+        getNextPageCallback().onNextPage();
     }
 
     private void moduleCompleted() {
