@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -171,6 +169,11 @@ public class QuizPageFragment extends NextPageFragment {
     private void quizCompleted() {
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
         User.setScore(getActivity(), mModPos, mPos, points);
+        if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
+            User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
+            User.completedQuiz(getActivity(), mModPos, mPos);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
                             "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
@@ -191,6 +194,7 @@ public class QuizPageFragment extends NextPageFragment {
     private void moduleCompleted() {
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
         User.setScore(getActivity(), mModPos, mPos, points);
+        User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você completou o módulo com 1000 pts!")
                 .setTitle("Parabéns!")

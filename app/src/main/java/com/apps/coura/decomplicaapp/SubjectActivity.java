@@ -44,6 +44,12 @@ public class SubjectActivity extends AppCompatActivity {
             scoreTextView.setText(score);
         }
 
+        TextView coinsTextView = (TextView)findViewById(R.id.coins_textView);
+        if (coinsTextView != null) {
+            String coins = "" + User.getGoldCoins(this);
+            coinsTextView.setText(coins);
+        }
+
         setRecyclerView();
     }
 
