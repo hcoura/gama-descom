@@ -56,6 +56,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.title.setText(mModules.get(position).getTitle());
 
         if (User.getUnlockedModule(mContext) >= position && position < 2) {
+//            Log.d("inside if", ""+User.getUnlockedModule(mContext)+" "+position);
             holder.image.setImageResource(mModules.get(position).getIcon());
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override

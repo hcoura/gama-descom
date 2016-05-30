@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -75,13 +76,17 @@ public class ExperienceBar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        int progressWidth = (int)((getWidth() - mBorderThickness*2) * mProgress);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            canvas.drawRoundRect(mBorderThickness/2, mBorderThickness/2, getWidth() - mBorderThickness/2, getHeight()-mBorderThickness/2, mRadius, mRadius, mBorderPaint);
+            canvas.drawRoundRect(mBorderThickness, mBorderThickness, progressWidth, getHeight()-mBorderThickness,mRadius - mBorderThickness , mRadius - mBorderThickness ,mFillPaint);
+        } else {
+            canvas.drawRect(mBorderThickness/2, mBorderThickness/2, getWidth() - mBorderThickness/2, getHeight()-mBorderThickness/2, mBorderPaint);
+            canvas.drawRect(mBorderThickness, mBorderThickness, progressWidth, getHeight()-mBorderThickness ,mFillPaint);
+        }
 
-        canvas.drawRoundRect(mBorderThickness/2, mBorderThickness/2, getWidth() - mBorderThickness/2, getHeight()-mBorderThickness/2, mRadius, mRadius, mBorderPaint);
 
 
-        int progressWidth = (int)((float)(getWidth() - mBorderThickness*2) * mProgress);
-
-        canvas.drawRoundRect(mBorderThickness, mBorderThickness, progressWidth, getHeight()-mBorderThickness,mRadius - mBorderThickness , mRadius - mBorderThickness ,mFillPaint);
     }
 
     public void setProgress(float progress) {

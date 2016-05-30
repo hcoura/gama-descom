@@ -1,5 +1,6 @@
 package com.apps.coura.decomplicaapp;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.QuizPage;
 import com.apps.coura.decomplicaapp.model.User;
+import com.apps.coura.decomplicaapp.views.ExperienceBar;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,6 +44,8 @@ public class QuizPageFragment extends NextPageFragment {
     private boolean currentAnswer = false;
     private boolean isQuizCompleted = false;
     private float mProgress;
+
+    private AlertDialog mCorrectAnswerDialog;
 
     private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
@@ -164,35 +169,78 @@ public class QuizPageFragment extends NextPageFragment {
 
 
     private void quizCompleted() {
+
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_view_results,
+                (ViewGroup) getActivity().getWindow().getDecorView()
+                .findViewById(android.R.id.content), false);
+
+        TextView scoreTextView = (TextView)v.findViewById(R.id.results_dialog_score_textView);
+        TextView coinsTextView = (TextView)v.findViewById(R.id.results_dialog_coins_textView);
+        ExperienceBar experienceBar = (ExperienceBar)v.findViewById(R.id.results_dialog_experienceBar);
+        FButton dialogConfirmButton = (FButton)v.findViewById(R.id.results_dialog_confirm_button);
+
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
+        float expProgress;
+
+        scoreTextView.setText(String.valueOf(points));
+
         User.setScore(getActivity(), mModPos, mPos, points);
         if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
             User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
+
+            String coins = "02";
+            coinsTextView.setText(coins);
+
             User.completedQuiz(getActivity(), mModPos, mPos);
             int exp = User.getExperience(getActivity()) + 300;
             if (exp > 1000) {
                 User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
                 User.setExperience(getActivity(), exp - 1000);
+                // TODO: 30/05/2016 launch dialog of next level
+                expProgress = 1f;
+//                experienceBar.setProgress(1f);
             } else {
                 User.setExperience(getActivity(), exp);
+                expProgress = (float)exp/1000;
+//                experienceBar.setProgress((float)exp/1000);
             }
+        } else {
+            expProgress = (float)User.getExperience(getActivity())/1000;
+//            experienceBar.setProgress((float)User.getExperience(getActivity())/1000);
         }
 
+        dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHandler.removeCallbacks(null);
+                if (mCorrectAnswerDialog != null) mCorrectAnswerDialog.dismiss();
+                getNextPageCallback().onNextPage();
+            }
+        });
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
-                            "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
-                            "e 300 pontos de experiência")
-                .setTitle("Parabéns!")
-                .setPositiveButton("Próxima aula", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                        mHandler.removeCallbacks(null);
-                        getNextPageCallback().onNextPage();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.show();
+        builder.setView(v);
+//        builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
+//                            "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
+//                            "e 300 pontos de experiência")
+//                .setTitle("Parabéns!")
+//                .setPositiveButton("Próxima aula", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // User clicked OK button
+//                        mHandler.removeCallbacks(null);
+//                        getNextPageCallback().onNextPage();
+//                    }
+//                });
+        mCorrectAnswerDialog = builder.create();
+        mCorrectAnswerDialog.setCancelable(false);
+        mCorrectAnswerDialog.show();
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(experienceBar, "progress", expProgress);
+        animator.setDuration(500);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
     }
 
     private void moduleCompleted() {
