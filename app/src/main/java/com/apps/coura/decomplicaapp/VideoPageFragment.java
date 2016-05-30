@@ -14,6 +14,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import info.hoang8f.widget.FButton;
+
 /**
  * Created by Henrique Coura on 25/05/2016.
  */
@@ -92,8 +94,8 @@ public class VideoPageFragment extends NextPageFragment {
             }
         });
 
-        Button nexPage = (Button) v.findViewById(R.id.change_page_button);
-        nexPage.setOnClickListener(new View.OnClickListener() {
+        FButton skipVideoButton = (FButton) v.findViewById(R.id.skip_video_button);
+        skipVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isVideoCompleted = true;

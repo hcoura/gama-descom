@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <fragment
@@ -83,11 +84,18 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/change_page_button"
+    <info.hoang8f.widget.FButton
+        android:id="@+id/skip_video_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="VideoComplete"/>
+        android:text="Pular Video"
+        app:buttonColor="@color/colorPrimary"
+        app:cornerRadius="4dp"
+        android:textColor="#fff"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"/>
 
 </LinearLayout>
