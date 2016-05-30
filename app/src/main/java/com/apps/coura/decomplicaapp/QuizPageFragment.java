@@ -1,6 +1,7 @@
 package com.apps.coura.decomplicaapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.QuizPage;
+import com.apps.coura.decomplicaapp.model.User;
 import com.apps.coura.decomplicaapp.views.MySeekBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
@@ -165,10 +167,10 @@ public class QuizPageFragment extends NextPageFragment {
         super.onStop();
     }
 
-    // TODO: 29/05/2016 check when time is 0
 
     private void quizCompleted() {
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
+        User.setScore(getActivity(), mModPos, mPos, points);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
                             "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
@@ -187,6 +189,8 @@ public class QuizPageFragment extends NextPageFragment {
     }
 
     private void moduleCompleted() {
+        int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
+        User.setScore(getActivity(), mModPos, mPos, points);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você completou o módulo com 1000 pts!")
                 .setTitle("Parabéns!")
@@ -194,7 +198,8 @@ public class QuizPageFragment extends NextPageFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
                         mHandler.removeCallbacks(null);
-                        getActivity().onBackPressed();
+                        Intent i = new Intent(getActivity(), SubjectActivity.class);
+                        getActivity().startActivity(i);
                     }
                 });
         AlertDialog dialog = builder.create();

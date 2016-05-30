@@ -9,11 +9,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
+import com.apps.coura.decomplicaapp.model.User;
 
 import java.util.List;
 
@@ -32,6 +35,12 @@ public class SubjectActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        TextView scoreTextView = (TextView)findViewById(R.id.score_textView);
+        if (scoreTextView != null) {
+            String score = "" + User.getScore(this);
+            scoreTextView.setText(score);
         }
 
         setRecyclerView();

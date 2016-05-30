@@ -28,5 +28,6 @@ dependencies {
     compile 'com.minimize.library:seekbar-compat:0.2.5'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'info.hoang8f:fbutton:1.0.5'
+    compile 'com.google.code.gson:gson:2.6.2'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
 }

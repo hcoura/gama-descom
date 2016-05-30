@@ -18,7 +18,7 @@ public class ModuleFactory {
         ArrayList<Module> modules = new ArrayList<>();
 
         // Module 1
-        Module module1 = new Module("Módulo 1");
+        Module module1 = new Module("História virou música! 1");
         module1.setIcon(R.drawable.mod1);
 
         VideoPage videoPage1 = new VideoPage("-DFgaH-X4PA");
@@ -98,7 +98,7 @@ public class ModuleFactory {
         module1.setQuizPages(quizPages1);
 
         // Module 2
-        Module module2 = new Module("Módulo 2");
+        Module module2 = new Module("História virou música! 2");
         module2.setIcon(R.drawable.mod2);
         module2.setLockedIcon(R.drawable.mod2_locked);
 

@@ -77,10 +77,10 @@
 
 
                 <TextView
+                    android:id="@+id/score_textView"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:text="1540"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"/>
