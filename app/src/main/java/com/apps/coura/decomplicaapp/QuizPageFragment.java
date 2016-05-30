@@ -172,6 +172,13 @@ public class QuizPageFragment extends NextPageFragment {
         if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
             User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
             User.completedQuiz(getActivity(), mModPos, mPos);
+            int exp = User.getExperience(getActivity()) + 300;
+            if (exp > 1000) {
+                User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
+                User.setExperience(getActivity(), exp - 1000);
+            } else {
+                User.setExperience(getActivity(), exp);
+            }
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -194,7 +201,17 @@ public class QuizPageFragment extends NextPageFragment {
     private void moduleCompleted() {
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
         User.setScore(getActivity(), mModPos, mPos, points);
-        User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
+        if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
+            User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
+            User.completedQuiz(getActivity(), mModPos, mPos);
+            int exp = User.getExperience(getActivity()) + 300;
+            if (exp > 1000) {
+                User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
+                User.setExperience(getActivity(), exp - 1000);
+            } else {
+                User.setExperience(getActivity(), exp);
+            }
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você completou o módulo com 1000 pts!")
                 .setTitle("Parabéns!")

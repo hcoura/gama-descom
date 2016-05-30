@@ -47,8 +47,7 @@
                 android:layout_toEndOf="@id/profile_image"
                 android:layout_toRightOf="@id/profile_image"
                 android:layout_height="20dp"
-                android:layout_margin="8dp"
-                app:experienceProgress="0.5"/>
+                android:layout_margin="8dp"/>
 
             <LinearLayout
                 android:id="@+id/points_layout"
@@ -114,10 +113,10 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Juninho em História"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"

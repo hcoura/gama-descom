@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.User;
+import com.apps.coura.decomplicaapp.views.ExperienceBar;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class SubjectActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private static final String[] mTitles = {"Juninho em História", "Nerd em História", "Universitário em História",
+            "Mestre em História", "Ninja em História"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,16 @@ public class SubjectActivity extends AppCompatActivity {
         if (coinsTextView != null) {
             String coins = "" + User.getGoldCoins(this);
             coinsTextView.setText(coins);
+        }
+
+        ExperienceBar expBar = (ExperienceBar)findViewById(R.id.experience_bar);
+        if (expBar != null) {
+            expBar.setProgress((float)User.getExperience(this)/1000);
+        }
+
+        TextView titleTextView = (TextView)findViewById(R.id.titleTextView);
+        if (titleTextView != null) {
+            titleTextView.setText(mTitles[User.getUserLevel(this)]);
         }
 
         setRecyclerView();

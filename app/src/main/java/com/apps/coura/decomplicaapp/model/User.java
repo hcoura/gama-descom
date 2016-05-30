@@ -19,6 +19,8 @@ public class User {
     private static final String SCORE_KEY = "scores";
     private static final String COINS_KEY = "coins";
     private static final String COMPLETED_QUIZ_KEY = "completed_quizzes";
+    private static final String EXPERIENCE_KEY = "experience";
+    private static final String LEVEL_KEY = "level";
 
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
@@ -129,5 +131,25 @@ public class User {
         Gson gson = new Gson();
         String jsonCompletedQuiz = gson.toJson(completedQuizzes);
         prefs.edit().putString(COMPLETED_QUIZ_KEY, jsonCompletedQuiz).apply();
+    }
+
+    public static void setExperience(Context context, int exp) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(EXPERIENCE_KEY, exp).apply();
+    }
+
+    public static int getExperience(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(EXPERIENCE_KEY, 0);
+    }
+
+    public static void setUserLevel(Context context, int lvl) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(LEVEL_KEY, lvl).apply();
+    }
+
+    public static int getUserLevel(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(LEVEL_KEY, 0);
     }
 }
