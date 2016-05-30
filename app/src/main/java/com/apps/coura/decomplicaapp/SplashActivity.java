@@ -7,9 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-/**
- * Created by Henrique Coura on 27/05/2016.
- */
+
 public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public class SplashActivity extends Activity {
                 iv.startAnimation(an2);
                 finish();
                 //todo: check if logged
-                Intent i = new Intent(getBaseContext(),LoginActivity.class);
+                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(i);
             }
 

@@ -76,6 +76,21 @@ public class User {
         return totalScore;
     }
 
+    public static int getModuleScore(Context context, int module) {
+        int totalScore = 0;
+        List<Score> scores = getScores(context);
+        if (scores == null) return totalScore;
+
+        for (Score s :
+                scores) {
+            if (s.getModule() == module && s.getQuestionIndex() != -1) {
+                totalScore += s.getScore();
+            }
+        }
+
+        return totalScore;
+    }
+
     public static void addGoldCoins(Context context, int coins) {
         int currentCoins = getGoldCoins(context);
 
