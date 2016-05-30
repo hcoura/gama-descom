@@ -42,7 +42,7 @@
         android:layout_toEndOf="@id/imageView3"
         android:layout_toRightOf="@id/imageView3"
         android:layout_below="@id/profile_button"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/principal_color"
         android:src="@drawable/store_button"/>
 

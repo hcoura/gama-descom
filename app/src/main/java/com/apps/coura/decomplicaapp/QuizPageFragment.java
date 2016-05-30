@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,7 @@ public class QuizPageFragment extends NextPageFragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (!mConfirmButton.isEnabled()){
                     mConfirmButton.setEnabled(true);
+                    mConfirmButton.setButtonColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 }
             }
         });

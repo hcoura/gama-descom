@@ -27,6 +27,7 @@ public class User {
     private static final String USERNAME_KEY = "user_name";
     private static final String AVATAR_ID_KEY = "avatar_id";
     private static final String IS_LOGGED_KEY = "isLogged";
+    private static final String SPENT_COINS_KEY = "spent_coins";
 
     private static final String[] mTitles = {"Juninho em História", "Nerd em História", "Universitário em História",
             "Mestre em História", "Ninja em História"};
@@ -236,5 +237,15 @@ public class User {
     public static boolean getIsLogged(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getBoolean(IS_LOGGED_KEY, false);
+    }
+
+    public static void setSpentCoins(Context context, int coins) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(SPENT_COINS_KEY, coins).apply();
+    }
+
+    public static int getSpentCoins(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(SPENT_COINS_KEY, 0);
     }
 }

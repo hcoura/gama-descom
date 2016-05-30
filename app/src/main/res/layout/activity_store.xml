@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_margin="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="Moedas disponíveis:"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/store_available_coins_textView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="00"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/coin"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Troca de Avatar e Apelido"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quer deixar o app com sua cara e  com o seu apelido preferido? Então não marque bobeira dê um upgrade agora por apenas 25 moedas."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorAccent"/>
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/avatar_change_button"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="25 MOEDAS"
+                app:buttonColor="#ccc"
+                app:cornerRadius="4dp"
+                android:textColor="#fff"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monitoria Extra"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Está com uma dúvida e não pode esperar? Invista nas monitorias extras pra usar quando você mais precisar!"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorAccent"/>
+
+            <info.hoang8f.widget.FButton
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="150 MOEDAS"
+                app:buttonColor="#ccc"
+                app:cornerRadius="4dp"
+                android:textColor="#fff"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Correção de Redação Extra"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fez mais redações do que esperava e está ansioso pra ver seu desempenho? Compre uma correção extra."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorAccent"/>
+
+            <info.hoang8f.widget.FButton
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="300 MOEDAS"
+                app:buttonColor="#ccc"
+                app:cornerRadius="4dp"
+                android:textColor="#fff"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

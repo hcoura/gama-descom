@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="OK!"
-        app:buttonColor="@color/colorPrimary"
+        app:buttonColor="@color/disabled_grey"
         app:cornerRadius="4dp"
         android:textColor="#fff"
         android:paddingLeft="16dp"

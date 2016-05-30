@@ -48,7 +48,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         TextView coinsTextView = (TextView)findViewById(R.id.coins_textView);
         if (coinsTextView != null) {
-            String coins = "" + User.getGoldCoins(this);
+            String coins = "" + (User.getGoldCoins(this) - User.getSpentCoins(this));
             coinsTextView.setText(coins);
         }
 

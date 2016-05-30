@@ -6,4 +6,5 @@
     <color name="dividerColor">#61000000</color>
     <color name="background_yellow">#f8ed6a</color>
     <color name="principal_color">#f27777</color>
+    <color name="disabled_grey">#ccc</color>
 </resources>

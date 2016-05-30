@@ -19,6 +19,7 @@ public class PrincipalActivity extends AppCompatActivity {
     ImageButton profileButton;
     ImageButton leaveButton;
     ImageButton challengeButton;
+    ImageButton storeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,15 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(PrincipalActivity.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        storeButton = (ImageButton)findViewById(R.id.store_button);
+        storeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PrincipalActivity.this,StoreActivity.class);
                 startActivity(i);
             }
         });
