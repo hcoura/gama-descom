@@ -3,6 +3,7 @@ package com.apps.coura.decomplicaapp.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.apps.coura.decomplicaapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,9 +24,19 @@ public class User {
     private static final String LEVEL_KEY = "level";
     private static final String MODULE_LAST_POS_KEY = "module_last_pos";
     private static final String UNLOCKED_MODULE_KEY = "unlocked_module";
+    private static final String USERNAME_KEY = "user_name";
+    private static final String AVATAR_ID_KEY = "avatar_id";
+    private static final String IS_LOGGED_KEY = "isLogged";
 
     private static final String[] mTitles = {"Juninho em História", "Nerd em História", "Universitário em História",
             "Mestre em História", "Ninja em História"};
+
+    public static final int[] mAvatarIds = {
+            R.drawable.hulk,
+            R.drawable.ninja,
+            R.drawable.batman,
+            R.drawable.storm
+    };
 
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
@@ -195,5 +206,35 @@ public class User {
 
     public static String getUserTitle(Context context) {
         return mTitles[getUserLevel(context)];
+    }
+
+    public static void setUserName(Context context, String username) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putString(USERNAME_KEY, username).apply();
+    }
+
+    public static String getUserName(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(USERNAME_KEY, "");
+    }
+
+    public static void setAvatarId(Context context, int avatar_id) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(AVATAR_ID_KEY, avatar_id).apply();
+    }
+
+    public static int getAvatarId(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(AVATAR_ID_KEY, 0);
+    }
+
+    public static void setIsLogged(Context context, boolean logged) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean(IS_LOGGED_KEY, logged).apply();
+    }
+
+    public static boolean getIsLogged(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean(IS_LOGGED_KEY, false);
     }
 }

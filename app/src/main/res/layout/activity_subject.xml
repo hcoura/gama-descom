@@ -38,8 +38,7 @@
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:src="@drawable/ninja"/>
+                android:layout_height="72dp"/>
 
             <com.apps.coura.decomplicaapp.views.ExperienceBar
                 android:id="@+id/experience_bar"

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.Module;
@@ -59,6 +60,11 @@ public class SubjectActivity extends AppCompatActivity {
         TextView titleTextView = (TextView)findViewById(R.id.titleTextView);
         if (titleTextView != null) {
             titleTextView.setText(User.getUserTitle(this));
+        }
+
+        ImageView profileImageView = (ImageView)findViewById(R.id.profile_image);
+        if (profileImageView != null) {
+            profileImageView.setImageResource(User.mAvatarIds[User.getAvatarId(this)]);
         }
 
         setRecyclerView();

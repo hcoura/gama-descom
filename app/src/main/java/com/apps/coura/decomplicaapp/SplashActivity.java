@@ -7,6 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.apps.coura.decomplicaapp.model.User;
+
 
 public class SplashActivity extends Activity {
     @Override
@@ -29,9 +31,14 @@ public class SplashActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
                 iv.startAnimation(an2);
                 finish();
-                //todo: check if logged
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(i);
+                if (User.getIsLogged(SplashActivity.this)) {
+                    Intent i = new Intent(SplashActivity.this, PrincipalActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+
             }
 
             @Override

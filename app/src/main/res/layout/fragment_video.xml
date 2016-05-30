@@ -35,14 +35,16 @@
 
             <TextView
                 android:id="@+id/current_video_tag_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:textSize="16sp"
                 android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/current_video_title_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="6"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
@@ -67,14 +69,16 @@
 
             <TextView
                 android:id="@+id/next_video_tag_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:textSize="16sp"
                 android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/next_video_title_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="6"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
