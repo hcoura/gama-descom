@@ -34,6 +34,7 @@ public class VideoPageFragment extends NextPageFragment {
 
     private YouTubePlayer mYouTubePlayer;
     private boolean isVideoCompleted = false;
+    private boolean hasReleased = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,6 +131,7 @@ public class VideoPageFragment extends NextPageFragment {
         mHandler.removeCallbacks(mUpdateProgressTask);
         if (mYouTubePlayer != null) {
             mYouTubePlayer.release();
+            hasReleased = true;
         }
         getNextPageCallback().onNextPage();
     }
@@ -147,7 +149,7 @@ public class VideoPageFragment extends NextPageFragment {
     private Runnable mUpdateProgressTask = new Runnable() {
         public void run() {
             float progress = 0;
-            if (mYouTubePlayer != null) {
+            if (mYouTubePlayer != null && !hasReleased) {
                 progress = (float) mYouTubePlayer.getCurrentTimeMillis() / mYouTubePlayer.getDurationMillis();
             }
 
@@ -161,4 +163,10 @@ public class VideoPageFragment extends NextPageFragment {
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacks(mUpdateProgressTask);
+    }
 }

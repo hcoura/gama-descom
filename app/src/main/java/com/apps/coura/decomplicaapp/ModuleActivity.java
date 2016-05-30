@@ -1,6 +1,7 @@
 package com.apps.coura.decomplicaapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,6 +12,7 @@ import android.util.Log;
 
 import com.apps.coura.decomplicaapp.model.Module;
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
+import com.apps.coura.decomplicaapp.model.User;
 import com.apps.coura.decomplicaapp.views.GamaProgressIndicator;
 import com.apps.coura.decomplicaapp.views.NoSwipeViewPager;
 
@@ -29,7 +31,6 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
     private GamaProgressIndicator mIndicatorBar;
     private NoSwipeViewPager mFragmentView;
     private int mNumPages;
-    private int mCurrentPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,39 +70,27 @@ public class ModuleActivity extends AppCompatActivity implements NextPageFragmen
             public void onPageScrollStateChanged(int state) {
             }
         });
-//        mCurrentPos = 0;
-//        if (mCurrentPos == 0 || mCurrentPos % 2 == 0) {
-//            int videoPos = mCurrentPos == 0 ? 0 : mCurrentPos/2;
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.module_fragment_view, VideoPageFragment.newInstance(mPos,videoPos))
-//                    .commit();
-//        } else {
-//            int quizPos = mCurrentPos == 1 ? 1 : mCurrentPos/2;
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.module_fragment_view, QuizPageFragment.newInstance(mPos,quizPos))
-//                    .commit();
-//        }
+
+        goTo(User.getModuleLastPosition(this, mPos));
     }
 
     @Override
     public void onNextPage() {
         int nextPos = mFragmentView.getCurrentItem() + 1;
-//        mCurrentPos++;
-//        if (mCurrentPos == 0 || mCurrentPos % 2 == 0) {
-//            int videoPos = mCurrentPos == 0 ? 0 : mCurrentPos/2;
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.module_fragment_view, VideoPageFragment.newInstance(mPos,videoPos))
-//                    .commit();
-//        } else {
-//            int quizPos = mCurrentPos == 1 ? 1 : mCurrentPos/2;
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.module_fragment_view, QuizPageFragment.newInstance(mPos,quizPos))
-//                    .commit();
-//        }
-        if (nextPos % 2 != 0) {
-            EventBus.getDefault().post(new StartTimer());
-        }
+        User.setModuleLastPosition(this, mPos, nextPos);
+        goTo(nextPos);
+    }
+
+    private void goTo(int nextPos) {
         mFragmentView.setCurrentItem(nextPos);
+        if (nextPos % 2 != 0) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    EventBus.getDefault().post(new StartTimer());
+                }
+            }, 200);
+        }
     }
 
     @Override

@@ -24,9 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import info.hoang8f.widget.FButton;
 
-/**
- * Created by Henrique Coura on 25/05/2016.
- */
 public class QuizPageFragment extends NextPageFragment {
 
     private static final String MOD_POSITION = "mod_position";
@@ -212,6 +209,7 @@ public class QuizPageFragment extends NextPageFragment {
                 User.setExperience(getActivity(), exp);
             }
         }
+        User.setModuleLastPosition(getActivity(), mModPos, 0);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Você completou o módulo com 1000 pts!")
                 .setTitle("Parabéns!")
@@ -221,6 +219,7 @@ public class QuizPageFragment extends NextPageFragment {
                         mHandler.removeCallbacks(null);
                         Intent i = new Intent(getActivity(), SubjectActivity.class);
                         startActivity(i);
+                        getActivity().finish();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -231,6 +230,6 @@ public class QuizPageFragment extends NextPageFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacks(null);
+        mHandler.removeCallbacks(mUpdateTimerTask);
     }
 }

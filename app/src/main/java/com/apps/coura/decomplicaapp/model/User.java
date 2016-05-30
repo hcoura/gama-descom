@@ -21,6 +21,7 @@ public class User {
     private static final String COMPLETED_QUIZ_KEY = "completed_quizzes";
     private static final String EXPERIENCE_KEY = "experience";
     private static final String LEVEL_KEY = "level";
+    private static final String MODULE_LAST_POS_KEY = "module_last_pos";
 
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
@@ -116,7 +117,7 @@ public class User {
         List<String> oldCompletedQuiz = getCompletedQuizzes(context);
         ArrayList<String> completedQuizzes = new ArrayList<>();
 
-        if (!completedQuizzes.isEmpty()) {
+        if (oldCompletedQuiz != null && !oldCompletedQuiz.isEmpty()) {
             for (String q :
                     oldCompletedQuiz) {
                 completedQuizzes.add(q);
@@ -151,5 +152,15 @@ public class User {
     public static int getUserLevel(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getInt(LEVEL_KEY, 0);
+    }
+
+    public static void setModuleLastPosition(Context context, int module, int pos) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(MODULE_LAST_POS_KEY + module, pos).apply();
+    }
+
+    public static int getModuleLastPosition(Context context, int module) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(MODULE_LAST_POS_KEY + module, 0);
     }
 }
