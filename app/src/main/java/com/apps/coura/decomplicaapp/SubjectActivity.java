@@ -35,6 +35,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("História");
         }
 
         TextView scoreTextView = (TextView)findViewById(R.id.score_textView);

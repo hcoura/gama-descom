@@ -13,9 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-/**
- * Created by Henrique Coura on 26/05/2016.
- */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -27,17 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Escolha a Matéria");
         }
 
 
         FrameLayout subjectButton = (FrameLayout)findViewById(R.id.subject_button);
-        subjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SubjectActivity.class);
-                startActivity(i);
-            }
-        });
+        if (subjectButton != null) {
+            subjectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(MainActivity.this, SubjectActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
 }

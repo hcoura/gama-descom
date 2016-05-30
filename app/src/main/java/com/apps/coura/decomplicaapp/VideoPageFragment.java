@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.apps.coura.decomplicaapp.model.ModuleFactory;
 import com.apps.coura.decomplicaapp.model.VideoPage;
@@ -102,6 +103,24 @@ public class VideoPageFragment extends NextPageFragment {
                 videoCompleted();
             }
         });
+
+        TextView currentTagTextView = (TextView)v.findViewById(R.id.current_video_tag_textView);
+        String currentTag = "0" + (mModPos + 1) + "." + (mPos + 1 );
+        currentTagTextView.setText(currentTag);
+        TextView currentTitleTextView = (TextView)v.findViewById(R.id.current_video_title_textView);
+        currentTitleTextView.setText(mVideoPage.getVideoTitle());
+
+        TextView nextTagTextView = (TextView)v.findViewById(R.id.next_video_tag_textView);
+        TextView nextTitleTextView = (TextView)v.findViewById(R.id.next_video_title_textView);
+        if (ModuleFactory.getListOfModules().get(mModPos).getVideoPages().size() <= mPos + 1) {
+            // last video
+            nextTagTextView.setText("");
+            nextTitleTextView.setText("Fim do módulo!!");
+        } else {
+            String nextTag = "0" + (mModPos + 1) + "." + (mPos + 2 );
+            nextTagTextView.setText(nextTag);
+            nextTitleTextView.setText(ModuleFactory.getListOfModules().get(mModPos).getVideoPages().get(mPos + 1).getVideoTitle());
+        }
 
 
         return v;

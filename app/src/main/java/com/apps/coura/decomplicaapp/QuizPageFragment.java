@@ -199,7 +199,7 @@ public class QuizPageFragment extends NextPageFragment {
                         // User clicked OK button
                         mHandler.removeCallbacks(null);
                         Intent i = new Intent(getActivity(), SubjectActivity.class);
-                        getActivity().startActivity(i);
+                        startActivity(i);
                     }
                 });
         AlertDialog dialog = builder.create();
