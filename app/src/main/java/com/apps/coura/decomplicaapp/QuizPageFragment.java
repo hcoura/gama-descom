@@ -43,6 +43,7 @@ public class QuizPageFragment extends NextPageFragment {
     private int mCurrentDuration = TIMER_LENGTH;
     private boolean currentAnswer = false;
     private boolean isQuizCompleted = false;
+    private float mProgress;
 
     private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
@@ -101,7 +102,11 @@ public class QuizPageFragment extends NextPageFragment {
             public void onClick(View v) {
                 if (currentAnswer) {
                     isQuizCompleted = true;
-                    quizCompleted();
+                    if (ModuleFactory.getListOfModules().get(mModPos).getQuizPages().size() <= mPos + 1) {
+                        moduleCompleted();
+                    } else {
+                        quizCompleted();
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Resposta Errada", Toast.LENGTH_SHORT).show();
                 }
@@ -126,15 +131,16 @@ public class QuizPageFragment extends NextPageFragment {
         public void run() {
             mCurrentDuration -= HANDLER_DELAY;
 
-            float progress = ((float)mCurrentDuration / TIMER_LENGTH) * 10000;
+            mProgress = (float)mCurrentDuration / TIMER_LENGTH;
 
-            mTimer.setProgress((int) progress);
-            getProgressCallback().onProgress(1 - (progress/10000));
+            mTimer.setProgress((int) (mProgress * 10000));
+            getProgressCallback().onProgress(1 - mProgress);
 
             // Running this thread after 50 milliseconds
-            if (mCurrentDuration <= 0 || isQuizCompleted) {
-                Log.d("Quiz", "timer ended");
-            } else {
+            if (mCurrentDuration <= 0 ) {
+                mProgress = 0;
+                Toast.makeText(getActivity(), "Tempo para pontuação bônus expirado", Toast.LENGTH_SHORT).show();
+            } else if (!isQuizCompleted) {
                 mHandler.postDelayed(this, HANDLER_DELAY);
             }
 
@@ -159,20 +165,20 @@ public class QuizPageFragment extends NextPageFragment {
         super.onStop();
     }
 
-    private void quizCompleted() {
+    // TODO: 29/05/2016 check when time is 0
 
+    private void quizCompleted() {
+        int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Você acertou a pergunta e ganhou 150 pts!")
+        builder.setMessage("Você acertou a pergunta e ganhou " + points + " pts!\n"+
+                            "Além disso você ganhou " + mQuizPage.getGoldCoins() + " moedas de ouro!\n"+
+                            "e 300 pontos de experiência")
                 .setTitle("Parabéns!")
                 .setPositiveButton("Próxima aula", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
-                        if (ModuleFactory.getListOfModules().get(mModPos).getQuizPages().size() <= mPos + 1) {
-                            moduleCompleted();
-                        } else {
-                            mHandler.removeCallbacks(null);
-                            getNextPageCallback().onNextPage();
-                        }
+                        mHandler.removeCallbacks(null);
+                        getNextPageCallback().onNextPage();
                     }
                 });
         AlertDialog dialog = builder.create();

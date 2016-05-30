@@ -1,10 +1,8 @@
 package com.apps.coura.decomplicaapp;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,19 +107,10 @@ public class VideoPageFragment extends NextPageFragment {
 
     private void videoCompleted() {
         mHandler.removeCallbacks(mUpdateProgressTask);
-        mYouTubePlayer.release();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Você acabou de assistir o vídeo e ganhar 50 pts!")
-                .setTitle("Parabéns!")
-                .setPositiveButton("Ir para o teste", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                        getNextPageCallback().onNextPage();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.show();
+        if (mYouTubePlayer != null) {
+            mYouTubePlayer.release();
+        }
+        getNextPageCallback().onNextPage();
     }
 
     public static VideoPageFragment newInstance(int mod_position, int position) {
