@@ -18,6 +18,7 @@
         android:id="@+id/challenge_button"
         android:layout_width="112dp"
         android:layout_height="112dp"
+        android:scaleType="fitXY"
         android:src="@drawable/challenge_button"
         android:background="@color/principal_color"
         android:layout_centerHorizontal="true"

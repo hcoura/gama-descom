@@ -10,6 +10,7 @@
     android:background="@color/background_yellow">
 
     <TextView
+        android:id="@+id/results_dialog_congratulate_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Parabéns! \nResposta Correta!"

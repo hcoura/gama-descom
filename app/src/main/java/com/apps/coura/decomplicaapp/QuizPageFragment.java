@@ -1,8 +1,6 @@
 package com.apps.coura.decomplicaapp;
 
 import android.animation.ObjectAnimator;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,12 +44,14 @@ public class QuizPageFragment extends NextPageFragment {
     private boolean isQuizCompleted = false;
     private float mProgress;
 
-    private AlertDialog mCorrectAnswerDialog;
+    private AlertDialog mResultsDialog;
     private AlertDialog mNewLevelDialog;
+    private AlertDialog mUnlockedModuleDialog;
 
     private FButton mConfirmButton;
     private RadioGroup mAnswerRadioGroup;
     private boolean hasLeveledUp = false;
+    private boolean hasUnlockedModule = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -195,7 +195,7 @@ public class QuizPageFragment extends NextPageFragment {
             coinsTextView.setText(coins);
 
             User.completedQuiz(getActivity(), mModPos, mPos);
-            int exp = User.getExperience(getActivity()) + 500;
+            int exp = User.getExperience(getActivity()) + 300;
             if (exp >= 1000) {
                 User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
                 User.setExperience(getActivity(), exp - 1000);
@@ -212,7 +212,7 @@ public class QuizPageFragment extends NextPageFragment {
         dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCorrectAnswerDialog != null) mCorrectAnswerDialog.dismiss();
+                if (mResultsDialog != null) mResultsDialog.dismiss();
                 if (hasLeveledUp) {
                     levelUpDialog();
                 } else {
@@ -222,13 +222,11 @@ public class QuizPageFragment extends NextPageFragment {
             }
         });
 
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v);
-        mCorrectAnswerDialog = builder.create();
-        mCorrectAnswerDialog.setCancelable(false);
-        mCorrectAnswerDialog.show();
+        mResultsDialog = builder.create();
+        mResultsDialog.setCancelable(false);
+        mResultsDialog.show();
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(experienceBar, "progress", expProgress);
         animator.setDuration(1000);
@@ -250,7 +248,11 @@ public class QuizPageFragment extends NextPageFragment {
             @Override
             public void onClick(View v) {
                 if (mNewLevelDialog != null) mNewLevelDialog.dismiss();
-                goToNextPage();
+                if (hasUnlockedModule){
+                    unlockedModuleDialog();
+                } else {
+                    goToNextPage();
+                }
 
             }
         });
@@ -268,43 +270,108 @@ public class QuizPageFragment extends NextPageFragment {
     }
 
     private void moduleCompleted() {
+
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_view_results,
+                (ViewGroup) getActivity().getWindow().getDecorView()
+                        .findViewById(android.R.id.content), false);
+
+        TextView scoreTextView = (TextView)v.findViewById(R.id.results_dialog_score_textView);
+        TextView coinsTextView = (TextView)v.findViewById(R.id.results_dialog_coins_textView);
+        TextView congratulateTextView = (TextView)v.findViewById(R.id.results_dialog_congratulate_textView);
+        congratulateTextView.setText("Parabéns! \nMódulo concluído!");
+        ExperienceBar experienceBar = (ExperienceBar)v.findViewById(R.id.results_dialog_experienceBar);
+        FButton dialogConfirmButton = (FButton)v.findViewById(R.id.results_dialog_confirm_button);
+
         int points = (int)((float)mQuizPage.getMaxPoints()*0.5 + (mProgress) * (float)mQuizPage.getMaxPoints()*0.5);
         User.setScore(getActivity(), mModPos, mPos, points);
-        if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
-            User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins());
-            User.addGoldCoins(getActivity(), 8); // module extra coins
-            User.completedQuiz(getActivity(), mModPos, mPos);
-            int exp = User.getExperience(getActivity()) + 300 + 200; // module extra exp
-            if (exp > 1000) {
-                User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
-                User.setExperience(getActivity(), exp - 1000);
-            } else {
-                User.setExperience(getActivity(), exp);
-            }
-        }
-        User.setModuleLastPosition(getActivity(), mModPos, 0);
-        if (User.getUnlockedModule(getActivity()) <= mModPos) {
-            User.setUnlockedModule(getActivity(), mModPos + 1);
-        }
 
         int moduleScore = User.getModuleScore(getActivity(), mModPos);
         User.setScore(getActivity(), mModPos, -1, (int)(moduleScore * 0.8));
 
+        float expProgress;
+
+        scoreTextView.setText(String.valueOf(points + moduleScore));
+
+        if (!User.hasCompletedQuiz(getActivity(), mModPos, mPos)) {
+            User.addGoldCoins(getActivity(), mQuizPage.getGoldCoins() + 8);
+
+            String coins = "10";
+            coinsTextView.setText(coins);
+
+            User.completedQuiz(getActivity(), mModPos, mPos);
+            int exp = User.getExperience(getActivity()) + 300 + 200;
+            if (exp >= 1000) {
+                User.setUserLevel(getActivity(), User.getUserLevel(getActivity()) + 1);
+                User.setExperience(getActivity(), exp - 1000);
+                hasLeveledUp = true;
+                expProgress = 1f;
+            } else {
+                User.setExperience(getActivity(), exp);
+                expProgress = (float)exp/1000;
+            }
+        } else {
+            expProgress = (float)User.getExperience(getActivity())/1000;
+        }
+
+        dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mResultsDialog != null) mResultsDialog.dismiss();
+                if (hasLeveledUp) {
+                    levelUpDialog();
+                } else if (hasUnlockedModule && mModPos < 1 ){
+                    unlockedModuleDialog();
+                } else {
+                    goHome();
+                }
+
+            }
+        });
+
+        User.setModuleLastPosition(getActivity(), mModPos, 0);
+        if (User.getUnlockedModule(getActivity()) <= mModPos) {
+            hasUnlockedModule = true;
+            User.setUnlockedModule(getActivity(), mModPos + 1);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Você completou o módulo com 1000 pts!")
-                .setTitle("Parabéns!")
-                .setPositiveButton("Retornar ao menu", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                        mHandler.removeCallbacks(null);
-                        Intent i = new Intent(getActivity(), SubjectActivity.class);
-                        startActivity(i);
-                        getActivity().finish();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.show();
+        builder.setView(v);
+        mResultsDialog = builder.create();
+        mResultsDialog.setCancelable(false);
+        mResultsDialog.show();
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(experienceBar, "progress", expProgress);
+        animator.setDuration(1000);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
+    }
+
+    private void goHome() {
+        Intent i = new Intent(getActivity(), SubjectActivity.class);
+        startActivity(i);
+        getActivity().finish();
+    }
+
+    private void unlockedModuleDialog() {
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_view_unlocked_module,
+                (ViewGroup) getActivity().getWindow().getDecorView()
+                        .findViewById(android.R.id.content), false);
+
+        FButton dialogConfirmButton = (FButton)v.findViewById(R.id.unlocked_dialog_confirm_button);
+
+        dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mUnlockedModuleDialog != null) mUnlockedModuleDialog.dismiss();
+                goHome();
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(v);
+        mUnlockedModuleDialog = builder.create();
+        mUnlockedModuleDialog.setCancelable(false);
+        mUnlockedModuleDialog.show();
     }
 
     @Override
