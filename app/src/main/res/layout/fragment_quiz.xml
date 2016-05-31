@@ -77,8 +77,6 @@
 
     </ScrollView>
 
-
-
     <info.hoang8f.widget.FButton
         android:enabled="false"
         android:id="@+id/quiz_confirm_button"
