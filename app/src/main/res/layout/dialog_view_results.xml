@@ -49,8 +49,7 @@
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:text="49"/>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -74,8 +73,7 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
-            android:gravity="center"
-            android:text="00"/>
+            android:gravity="center"/>
 
     </LinearLayout>
 
