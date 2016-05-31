@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="16dp"
     android:background="@color/background_yellow">
 
     <TextView
@@ -73,7 +72,8 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="00"/>
 
     </LinearLayout>
 

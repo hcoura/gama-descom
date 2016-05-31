@@ -26,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Perfil");
         }
 
 

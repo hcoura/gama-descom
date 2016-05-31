@@ -39,7 +39,6 @@ public class VideoPageFragment extends NextPageFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // todo: save instance
 
         mHandler = new Handler();
 

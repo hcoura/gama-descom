@@ -13,8 +13,6 @@ public class ModuleFactory {
 
     public static ArrayList<Module> getListOfModules() {
 
-        // todo: clear ***
-
         ArrayList<Module> modules = new ArrayList<>();
 
         // Module 1
@@ -31,7 +29,7 @@ public class ModuleFactory {
         List<Answer> answers = Arrays.asList(
                 new Answer("As mulheres e os trabalhadores", false),
                 new Answer("Os fascistas e os estrangeiros", false),
-                new Answer("Os homossexuais e os soviéticos***", true),
+                new Answer("Os homossexuais e os soviéticos", true),
                 new Answer("A raça ariana e as mulheres", false),
                 new Answer("Os homossexuais e os estrangeiros", false)
         );
@@ -47,7 +45,7 @@ public class ModuleFactory {
 
         List<Answer> answers2 = Arrays.asList(
                 new Answer("Foi o mais importante escultor e poeta do Renascimento Italiano", false),
-                new Answer("Foi um importante pintor, escultor, cientista, engenheiro, escritor e físico do Renascimento***", true),
+                new Answer("Foi um importante pintor, escultor, cientista, engenheiro, escritor e físico do Renascimento", true),
                 new Answer("Foi um importante governante italiano que patrocinou vários artistas e cientistas do período renascentista", false),
                 new Answer("Foi um importante escultor e pintor italiano do Renascimento, cuja principal obra é Pietá", false),
                 new Answer("Nenhuma das opções", false)
@@ -69,7 +67,7 @@ public class ModuleFactory {
                 new Answer("Perspectiva dos representantes do sul dos EUA", false),
                 new Answer("Proposta de Lincoln para abolir a escravidão", false),
                 new Answer("Proposição nortista para impedir a expansão para o Oeste", false),
-                new Answer("Preocupação de Lincoln com uma possível guerra civil***", true)
+                new Answer("Preocupação de Lincoln com uma possível guerra civil", true)
         );
 
         quizPage3.setAnswers(answers3);
@@ -86,7 +84,7 @@ public class ModuleFactory {
                 new Answer("A expansão da economia açucareira no Nordeste, o estreitamento das relações com a Inglaterra e a expulsão dos jesuítas", false),
                 new Answer("A incorporação do Extremo-Sul, o início da exploração do ouro em Minas Gerais e a reordenação administrativa do território", false),
                 new Answer("A incorporação do Extremo-Sul, o início da exploração do ouro em Minas Gerais e a reordenação administrativa do território", false),
-                new Answer("A expansão da ocupação interna pela pecuária, a expulsão dos franceses e o incremento do bandeirismo***", true)
+                new Answer("A expansão da ocupação interna pela pecuária, a expulsão dos franceses e o incremento do bandeirismo", true)
         );
 
         quizPage4.setAnswers(answers4);
@@ -116,7 +114,7 @@ public class ModuleFactory {
                 new Answer("Política Segundo as Sagradas Escrituras", false),
                 new Answer("A Arte da Guerra", false),
                 new Answer("A Divina Comédia", false),
-                new Answer("O Príncipe***", true)
+                new Answer("O Príncipe", true)
         );
         quizPage5.setAnswers(answers5);
 
@@ -130,7 +128,7 @@ public class ModuleFactory {
 
         List<Answer> answers6 = Arrays.asList(
                 new Answer("Restauração financeira, com a consequente fundação do Bando da França, em 1800", false),
-                new Answer("Decretação do Bloqueio Continental, em 1806, com o qual Napoleão visava arruinar a indústria e o comércio ingleses***", true),
+                new Answer("Decretação do Bloqueio Continental, em 1806, com o qual Napoleão visava arruinar a indústria e o comércio ingleses", true),
                 new Answer("Promulgação, em 1804, do Código Civil, que incorporou definitivamente à legislação francesa os princípios liberais burgueses", false),
                 new Answer("Expansão territorial da França, graças à incorporação de várias regiões da Europa, formando o chamado \"Império Napoleônico\"", false),
                 new Answer("Criação do franco como novo padrão monetário", false)
@@ -147,7 +145,7 @@ public class ModuleFactory {
 
         List<Answer> answers7 = Arrays.asList(
                 new Answer("Foi o período em que o Brasil exportava em grande quantidade café e leite", false),
-                new Answer("Foi uma política de revezamento do poder nacional pelos estados de São Paulo e Minas Gerais***", true),
+                new Answer("Foi uma política de revezamento do poder nacional pelos estados de São Paulo e Minas Gerais", true),
                 new Answer("Foi o período em que o estado de São Paulo era o maior produtor de café e leite", false),
                 new Answer("Foi o momento em que o poder político e econômico era concentrado nas mãos dos coronéis, que tomavam bastante café com leite", false),
                 new Answer("Nenhuma das opções", false)
@@ -166,7 +164,7 @@ public class ModuleFactory {
                 new Answer("Uma ditadura socialista", false),
                 new Answer("Um parlamentarismo democrático", false),
                 new Answer("Um presidencialismo oligárquico", false),
-                new Answer("Um presidencialismo autocrático***", true),
+                new Answer("Um presidencialismo autocrático", true),
                 new Answer("Um parlamentarismo populista", false)
         );
 

@@ -39,6 +39,20 @@ public class User {
             R.drawable.storm
     };
 
+    public static final Integer[] mRankingScores = {
+        340,
+        320,
+        300,
+        294
+    };
+
+    public static final String[] mRankingNames = {
+            "vitor",
+            "karina12",
+            "henrique",
+            "ricardo49"
+    };
+
     public static void setScore(Context context, int module, int question_index, int points) {
         List<Score> scores = getScores(context);
 
@@ -99,6 +113,21 @@ public class User {
         for (Score s :
                 scores) {
             if (s.getModule() == module && s.getQuestionIndex() != -1) {
+                totalScore += s.getScore();
+            }
+        }
+
+        return totalScore;
+    }
+
+    public static int getModuleTotalScore(Context context, int module) {
+        int totalScore = 0;
+        List<Score> scores = getScores(context);
+        if (scores == null) return totalScore;
+
+        for (Score s :
+                scores) {
+            if (s.getModule() == module) {
                 totalScore += s.getScore();
             }
         }
