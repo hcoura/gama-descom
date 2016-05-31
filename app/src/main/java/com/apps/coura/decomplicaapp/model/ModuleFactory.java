@@ -22,7 +22,7 @@ public class ModuleFactory {
         VideoPage videoPage1 = new VideoPage("-DFgaH-X4PA");
         videoPage1.setVideoTitle("Rap do Nazismo - História virou música!");
 
-        QuizPage quizPage1 = new QuizPage("O nazismo é uma ideologia anticomunista que além de odiarem os negros e os judeus, também odiava:");
+        QuizPage quizPage1 = new QuizPage("O nazismo é uma ideologia anticomunista que além de pregar o ódio aos negros e aos judeus, também era contra:");
         quizPage1.setMaxPoints(50);
         quizPage1.setGoldCoins(2);
 
@@ -39,7 +39,7 @@ public class ModuleFactory {
         VideoPage videoPage2 = new VideoPage("qE65BWjM7c4");
         videoPage2.setVideoTitle("Renascimento Artístico - História virou música!");
 
-        QuizPage quizPage2 = new QuizPage("Sobre Leonardo da Vinci, é verdadeira afirmar que:");
+        QuizPage quizPage2 = new QuizPage("Sobre Leonardo da Vinci, é correto afirmar que:");
         quizPage2.setMaxPoints(50);
         quizPage2.setGoldCoins(2);
 
@@ -47,7 +47,7 @@ public class ModuleFactory {
                 new Answer("Foi o mais importante escultor e poeta do Renascimento Italiano", false),
                 new Answer("Foi um importante pintor, escultor, cientista, engenheiro, escritor e físico do Renascimento", true),
                 new Answer("Foi um importante governante italiano que patrocinou vários artistas e cientistas do período renascentista", false),
-                new Answer("Foi um importante escultor e pintor italiano do Renascimento, cuja principal obra é Pietá", false),
+                new Answer("Foi um importante escultor e pintor italiano do Renascimento e sua principal obra é a Pietá", false),
                 new Answer("Nenhuma das opções", false)
         );
 
@@ -58,7 +58,7 @@ public class ModuleFactory {
 
         QuizPage quizPage3 = new QuizPage("“Uma casa dividida contra si mesma não subsistirá. Acredito que esse governo, meio escravista e meio livre, " +
                 "não poderá durar para sempre. Não espero que a União se dissolva; não espero que a casa caia. Mas espero que deixe de ser dividida. " +
-                "Ela se transformará só numa coisa ou só na outra.” Abraham Lincoln, em 1858. Esse texto expressa a:");
+                "Ela se transformará só numa coisa ou só na outra.” Abraham Lincoln, 1858. Esse texto expressa a:");
         quizPage3.setMaxPoints(50);
         quizPage3.setGoldCoins(2);
 
@@ -128,7 +128,7 @@ public class ModuleFactory {
 
         List<Answer> answers6 = Arrays.asList(
                 new Answer("Restauração financeira, com a consequente fundação do Bando da França, em 1800", false),
-                new Answer("Decretação do Bloqueio Continental, em 1806, com o qual Napoleão visava arruinar a indústria e o comércio ingleses", true),
+                new Answer("Decretação do Bloqueio Continental, em 1806, cujo objetivo era arruinar a indústria e o comércio ingleses", true),
                 new Answer("Promulgação, em 1804, do Código Civil, que incorporou definitivamente à legislação francesa os princípios liberais burgueses", false),
                 new Answer("Expansão territorial da França, graças à incorporação de várias regiões da Europa, formando o chamado \"Império Napoleônico\"", false),
                 new Answer("Criação do franco como novo padrão monetário", false)
@@ -144,7 +144,7 @@ public class ModuleFactory {
         quizPage7.setGoldCoins(2);
 
         List<Answer> answers7 = Arrays.asList(
-                new Answer("Foi o período em que o Brasil exportava em grande quantidade café e leite", false),
+                new Answer("Foi o período em que o Brasil exportava café e leite em grande quantidade", false),
                 new Answer("Foi uma política de revezamento do poder nacional pelos estados de São Paulo e Minas Gerais", true),
                 new Answer("Foi o período em que o estado de São Paulo era o maior produtor de café e leite", false),
                 new Answer("Foi o momento em que o poder político e econômico era concentrado nas mãos dos coronéis, que tomavam bastante café com leite", false),
